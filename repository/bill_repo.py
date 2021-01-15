@@ -1,6 +1,7 @@
 from repository.repo_interface import IRepo
 from domain.fiscal_bill import FiscalBill
 from domain.invoice import Invoice
+import copy
 
 
 class BillRepo(IRepo):
@@ -12,13 +13,13 @@ class BillRepo(IRepo):
     def store(self, bill):
         if not type(bill) in self._implemented_objects:
             raise Exception("Type is not allowed")
-        self._list.append(bill)
+        self._list.append(copy.deepcopy(bill))
 
     def get_all(self):
         return self._list
 
     def get(self, bill_id):
-        for bill in self.get_all():
+        for bill in copy.deepcopy(self._list):
             if bill.get_bill_id() == bill_id:
                 return bill
 
@@ -28,6 +29,8 @@ class BillRepo(IRepo):
                 self._list.remove(bill)
 
     def update(self, old_obj, new_obj):
+
+
         if not type(old_obj) in self._implemented_objects:
             raise Exception("Type is not allowed")
         if not type(new_obj) in self._implemented_objects:

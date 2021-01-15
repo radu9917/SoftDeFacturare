@@ -1,4 +1,5 @@
 from repository.repo_interface import IRepo
+import copy
 
 
 class CurrencyRepo(IRepo):
@@ -6,7 +7,7 @@ class CurrencyRepo(IRepo):
         self._list = []
 
     def store(self, currency):
-        self._list.append(currency)
+        self._list.append(copy.deepcopy(currency))
 
     def delete(self, currency_id):
         for currency in self.get_all():

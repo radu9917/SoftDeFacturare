@@ -1,4 +1,5 @@
 from repository.repo_interface import IRepo
+import copy
 
 
 class ItemRepo(IRepo):
@@ -6,7 +7,7 @@ class ItemRepo(IRepo):
         self._list = []
 
     def store(self, item):
-        self._list.append(item)
+        self._list.append(copy.deepcopy(item))
 
     def get(self, item_id):
         for item in self.get_all():

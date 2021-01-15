@@ -65,3 +65,24 @@ class Bill:
 
     def set_tax(self, tax):
         self.__tax = tax
+
+    def __eq__(self, other):
+        if self.get_bill_id() != other.get_bill_id():
+            return False
+        if self.get_currency() != other.get_currency():
+            return False
+        if self.get_tax() != other.get_tax():
+            return False
+        if self.get_items() != other.get_items():
+            return False
+        if self.get_notes() != other.get_notes():
+            return False
+        if self.get_due_date() != other.get_due_date():
+            return False
+        if self.get_customer() != other.get_customer():
+            return False
+        if self.get_issue_date() != other.get_issue_date():
+            return False
+        if self.get_issuer() != other.get_issuer():
+            return False
+        return True
