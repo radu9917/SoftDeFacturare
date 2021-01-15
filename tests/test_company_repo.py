@@ -19,5 +19,5 @@ class TestCompanyRepo(unittest.TestCase):
         company.set_id(2)
         company_repo.update(company_repo.get(1), company)
         self.assertEqual(company_repo.get(2), company)
-        company_repo.delete(company)
+        company_repo.delete(company.get_id())
         self.assertEqual(company_repo.get_all(), [])

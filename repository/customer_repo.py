@@ -18,7 +18,7 @@ class CustomerRepo(IRepo):
 
     def delete(self, index):
         for customer in self.get_all():
-            if customer.get_id() == index.get_id():
+            if customer.get_id() == index:
                 self._list.remove(customer)
                 return customer
 
