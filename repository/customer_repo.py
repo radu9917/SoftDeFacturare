@@ -14,6 +14,7 @@ class CustomerRepo(IRepo):
         if type(customer) != self._repo_type:
             raise Exception("Type is not allowed")
         self._list.append(copy.deepcopy(customer))
+        return customer
 
     def delete(self, index):
         for customer in self.get_all():

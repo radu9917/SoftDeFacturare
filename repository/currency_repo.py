@@ -8,6 +8,7 @@ class CurrencyRepo(IRepo):
 
     def store(self, currency):
         self._list.append(copy.deepcopy(currency))
+        return currency
 
     def delete(self, currency_to_delete):
         for currency in self.get_all():

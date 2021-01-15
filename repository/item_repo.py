@@ -8,6 +8,7 @@ class ItemRepo(IRepo):
 
     def store(self, item):
         self._list.append(copy.deepcopy(item))
+        return item
 
     def get(self, item_id):
         for item in self.get_all():

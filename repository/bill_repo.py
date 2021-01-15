@@ -14,6 +14,7 @@ class BillRepo(IRepo):
         if not type(bill) in self._implemented_objects:
             raise Exception("Type is not allowed")
         self._list.append(copy.deepcopy(bill))
+        return bill
 
     def get_all(self):
         return copy.deepcopy(self._list)
