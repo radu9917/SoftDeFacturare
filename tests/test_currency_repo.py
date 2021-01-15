@@ -15,5 +15,5 @@ class TestCurrencyRepo(unittest.TestCase):
         currency2.set_id(2)
         currency_repo.update(currency, currency2)
         self.assertEqual(currency_repo.get(2), currency2)
-        currency_repo.delete(2)
+        currency_repo.delete(currency2)
         self.assertEqual(currency_repo.get_all(), [])

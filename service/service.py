@@ -22,9 +22,9 @@ class Service:
 
     def delete_customer(self, customer, customer_type):
         if customer_type == Company:
-            self.__company_repo.delete(customer.get_id())
+            self.__company_repo.delete(self.__company_repo.get(customer))
         if customer_type == Individual:
-            self.__individual_repo.delete(customer.get_id())
+            self.__individual_repo.delete(self.__individual_repo.get(customer))
 
     def modify_customer(self, old_customer, new_customer):
         if isinstance(new_customer, Company):

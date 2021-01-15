@@ -17,8 +17,9 @@ class CustomerRepo(IRepo):
 
     def delete(self, index):
         for customer in self.get_all():
-            if customer.get_id() == index:
+            if customer.get_id() == index.get_id():
                 self._list.remove(customer)
+                return customer
 
     def get_all(self):
         return copy.deepcopy(self._list)
@@ -27,6 +28,7 @@ class CustomerRepo(IRepo):
         for customer in self.get_all():
             if index == customer.get_id():
                 return customer
+        return None
 
     def update(self, old_customer, new_customer):
         if not type(old_customer) in self._implemented_objects:
@@ -47,3 +49,4 @@ class CustomerRepo(IRepo):
                 customer.set_company_name(new_customer.get_company_name())
                 customer.set_registration_number(new_customer.get_registration_number())
                 customer.set_fiscal_no(new_customer.get_fiscal_no())
+            return old_customer

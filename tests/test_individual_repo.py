@@ -22,5 +22,5 @@ class TestIndividualRepo(unittest.TestCase):
         individual2.set_email_address("laur.petre68@gmail.com")
         individual_repo.update(individual1, individual2)
         self.assertEqual(individual2, individual_repo.get(2))
-        individual_repo.delete(2)
+        individual_repo.delete(individual2)
         self.assertEqual(individual_repo.get_all(), [])

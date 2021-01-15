@@ -13,22 +13,20 @@ class ItemRepo(IRepo):
         for item in self.get_all():
             if item.get_id() == item_id:
                 return item
+        return None
 
     def get_all(self):
         return copy.deepcopy(self._list)
 
-    def delete(self, item_id):
+    def delete(self, item_to_delete):
         for item in self.get_all():
-            if item.get_id() == item_id:
+            if item.get_id() == item_to_delete.get_id():
                 self._list.remove(item)
+                return item
 
     def update(self, old_item, new_item):
         for item in self._list:
             if item.get_id() == old_item.get_id():
-                item.set_name(new_item.get_name())
-                item.set_id(new_item.get_id())
-                item.set_currency(new_item.get_currency())
-                item.set_description(new_item.get_description())
-                item.set_price(new_item.get_price())
-                item.set_discount(new_item.get_discount())
-
+                self.delete(old_item)
+                self.store(new_item)
+                return old_item

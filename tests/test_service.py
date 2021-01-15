@@ -30,7 +30,7 @@ class TestService(unittest.TestCase):
         item.set_id(2)
         service.modify_item(1, item)
         self.assertEqual(service.view_item(), [item])
-        service.delete_item(2)
+        service.delete_item(item)
         self.assertEqual(service.view_item(), [])
 
     def test_currency_options(self):
@@ -44,7 +44,7 @@ class TestService(unittest.TestCase):
         currency.set_name("US Dollar")
         service.modify_currency(1, currency)
         self.assertEqual(service.view_currency(), [currency])
-        service.delete_currency(2)
+        service.delete_currency(currency)
         self.assertEqual(service.view_currency(), [])
 
     def test_customer_options(self):
@@ -69,3 +69,21 @@ class TestService(unittest.TestCase):
         self.assertEqual(service.view_customer(Individual), [individual])
         service.delete_customer(2, Individual)
         self.assertEqual(service.view_customer(Individual), [])
+
+    def test_company_customer(self):
+        service = Service(BillRepo(Invoice), BillRepo(FiscalBill), CurrencyRepo(), ItemRepo(), CustomerRepo(Company),
+                          CustomerRepo(Individual))
+        company = Company("La Geani", "RO0123", "523647")
+        company.set_id(1)
+        company.set_first_name("Petre")
+        company.set_last_name("Vasile")
+        company.set_phone_number("0745321784")
+        company.set_email_address("petre.vasileboss@yahoo.com")
+        service.create_customer(company)
+        self.assertEqual(service.view_customer(Company), [company])
+        company.set_id(2)
+        company.set_last_name("Miron")
+        service.modify_customer(1, company)
+        self.assertEqual(service.view_customer(Company), [company])
+        service.delete_customer(2, Company)
+        self.assertEqual(service.view_customer(Company), [])

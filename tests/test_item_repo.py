@@ -26,5 +26,5 @@ class TestItemRepo(unittest.TestCase):
         item2.set_description("A fruit")
         item_repo.update(item1, item2)
         self.assertEqual(item_repo.get(2), item2)
-        item_repo.delete(2)
+        item_repo.delete(item2)
         self.assertEqual(item_repo.get_all(), [])
