@@ -15,7 +15,7 @@ class ItemRepo(IRepo):
                 return item
 
     def get_all(self):
-        return self._list
+        return copy.deepcopy(self._list)
 
     def delete(self, item_id):
         for item in self.get_all():
@@ -23,7 +23,7 @@ class ItemRepo(IRepo):
                 self._list.remove(item)
 
     def update(self, old_item, new_item):
-        for item in self.get_all():
+        for item in self._list:
             if item.get_id() == old_item.get_id():
                 item.set_name(new_item.get_name())
                 item.set_id(new_item.get_id())

@@ -1,5 +1,5 @@
 import unittest
-from repository.individual_repo import IndividualRepo
+from repository.customer_repo import CustomerRepo
 from domain.individual import Individual
 
 
@@ -11,7 +11,7 @@ class TestIndividualRepo(unittest.TestCase):
         individual1.set_first_name("Petre")
         individual1.set_last_name("Laur")
         individual1.set_email_address("laur.petre68@gmail.com")
-        individual_repo = IndividualRepo()
+        individual_repo = CustomerRepo(Individual)
         individual_repo.store(individual1)
         self.assertEqual(len(individual_repo.get_all()), 1)
         individual2 = Individual("1981216065431")

@@ -16,12 +16,12 @@ class BillRepo(IRepo):
         self._list.append(copy.deepcopy(bill))
 
     def get_all(self):
-        return self._list
+        return copy.deepcopy(self._list)
 
     def get(self, bill_id):
-        for bill in copy.deepcopy(self._list):
+        for bill in self.get_all():
             if bill.get_bill_id() == bill_id:
-                return bill
+                return copy.deepcopy(bill)
 
     def delete(self, bill_id):
         for bill in self.get_all():
@@ -29,8 +29,6 @@ class BillRepo(IRepo):
                 self._list.remove(bill)
 
     def update(self, old_obj, new_obj):
-
-
         if not type(old_obj) in self._implemented_objects:
             raise Exception("Type is not allowed")
         if not type(new_obj) in self._implemented_objects:

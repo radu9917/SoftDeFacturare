@@ -15,7 +15,7 @@ class CurrencyRepo(IRepo):
                 self._list.remove(currency)
 
     def get_all(self):
-        return self._list
+        return copy.deepcopy(self._list)
 
     def get(self, currency_id):
         for currency in self.get_all():
@@ -23,7 +23,7 @@ class CurrencyRepo(IRepo):
                 return currency
 
     def update(self, old_currency, new_currency):
-        for currency in self.get_all():
+        for currency in self._list:
             if currency.get_id() == old_currency.get_id():
                 currency.set_id(new_currency.get_id())
                 currency.set_code(new_currency.get_code())

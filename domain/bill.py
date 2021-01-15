@@ -86,3 +86,10 @@ class Bill:
         if self.get_issuer() != other.get_issuer():
             return False
         return True
+
+    def add_items(self, item_to_add):
+        for item in self.get_items():
+            if item != item_to_add:
+                self.__items.append(item_to_add)
+            else:
+                item.increase_quantity()
