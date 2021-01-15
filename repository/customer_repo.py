@@ -39,15 +39,6 @@ class CustomerRepo(IRepo):
 
         for customer in self._list:
             if old_customer.get_id() == customer.get_id():
-                customer.set_id(new_customer.get_id())
-                customer.set_phone_number(new_customer.get_phone_number())
-                customer.set_first_name(new_customer.get_first_name())
-                customer.set_last_name(new_customer.get_last_name())
-                customer.set_email_address(new_customer.get_email_address())
-            if isinstance(customer, Individual):
-                customer.set_cnp(new_customer.get_cnp())
-            if isinstance(customer, Company):
-                customer.set_company_name(new_customer.get_company_name())
-                customer.set_registration_number(new_customer.get_registration_number())
-                customer.set_fiscal_no(new_customer.get_fiscal_no())
-            return old_customer
+                self.delete(old_customer.get_id())
+                self.store(new_customer)
+                return old_customer
