@@ -1,11 +1,12 @@
 from service.service_customer import CustomerService
 from service.service_bill import BillService
+from service.service_item import ItemService
 
 
 class Service:
-    def __init__(self, currency_repo, item_repo):
+    def __init__(self, currency_repo):
         self.__currency_repo = currency_repo
-        self.__item_repo = item_repo
+        self.__item_repo = ItemService()
         self.__customer_service = CustomerService()
         self.__bill_service = BillService()
 
@@ -27,24 +28,24 @@ class Service:
 
     # Item Options
     def create_item(self, item):
-        self.__item_repo.store(item)
+        self.__item_repo.create_item(item)
 
     def delete_item(self, item_id):
-        self.__item_repo.delete(item_id)
+        self.__item_repo.delete_item(item_id)
 
     def modify_item(self, old_item, new_item):
-        self.__item_repo.update(self.__item_repo.get(old_item), new_item)
+        self.__item_repo.modify_item(old_item, new_item)
 
     def view_item(self):
-        return self.__item_repo.get_all()
+        return self.__item_repo.view_item()
 
     def choose_item(self, item_id):
-        return self.__item_repo.get(item_id)
+        return self.__item_repo.choose_item(item_id)
 
     def add_item_to_bill(self, item_id, bill):
         item = self.choose_item(item_id)
         bill.add_items(item)
-        self.__bill_service.create_bill(bill)
+        self.__bill_service.update_bill(bill, bill)
 
     # Currency Options
     def create_currency(self, currency):
@@ -74,3 +75,9 @@ class Service:
 
     def choose_invoice(self, bill_id):
         return self.__bill_service.choose_invoice(bill_id)
+
+    def print_fiscal_bill(self, bill_id):
+        return self.__bill_service.print_fiscal_bill(bill_id)
+
+    def print_invoice(self, bill_id):
+        return self.__bill_service.print_invoice(bill_id)

@@ -7,7 +7,7 @@ class Bill:
         self.__items = []
         self.__currency = None
         self.__notes = None
-        self.__tax = None
+        self.__tax = 0
         self.__bill_id = None
 
     # GETTERS
@@ -93,3 +93,26 @@ class Bill:
                 self.__items.append(item_to_add)
             else:
                 item.increase_quantity()
+        self.__tax += item_to_add.get_price()
+
+    def __str__(self):
+        customer = self.get_customer()
+        string = ("To: " + customer.get_first_name() + " " + customer.get_last_name())
+        string += (" " + customer.get_email_address() + " ")
+        string += "\n"
+        string += ("Issued by:" + self.get_issuer().get_company_name() + " " + self.get_issuer().get_email_address())
+        string += "\n"
+        string += ("Date:" + self.get_issue_date() + "\n")
+        string += ("Due Date:" + self.get_due_date() + "\n")
+        string += "Items:\n"
+        index = 1
+        for item in self.get_items():
+            string += (str(index) + ". ")
+            string += (item.get_name() + " - " + item.get_description() + " - " + str(item.get_quantity()) + "x" +
+                       str(item.get_price()) + item.get_currency().get_symbol())
+            string += "\n"
+            index += 1
+        string += ("Total: " + str(self.get_tax()) + self.get_currency().get_symbol())
+        string += "\n"
+        string += ("Notes:" + self.get_notes())
+        return string

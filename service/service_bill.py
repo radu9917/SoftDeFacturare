@@ -32,3 +32,14 @@ class BillService:
 
     def choose_invoice(self, bill_id):
         return self.__invoice_repo.get(bill_id)
+
+    def print_fiscal_bill(self, bill_id):
+        for bill in self.__fiscal_bill_repo.get_all():
+            if bill.get_bill_id() == bill_id:
+                return bill
+
+    def print_invoice(self, bill_id):
+        for bill in self.__invoice_repo.get_all():
+            if bill.get_bill_id() == bill_id:
+                return bill
+
