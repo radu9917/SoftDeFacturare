@@ -133,6 +133,11 @@ class Console:
         for item in self.__service.view_items():
             print(item)
 
+    def choose_item(self):
+        self.view_items()
+        option = input("Choose desired item")
+        return self.__service.choose_item(option)
+
     # Currency Options
     def currency_menu(self):
         print("1. Create currency\n2.Delete currency\n3.Modify currency\n4.View all curency")
@@ -218,3 +223,12 @@ class Console:
         new_bill = self.input_bill(self.choose_bill_type())
         old_bill = input("What bill do you want to change?")
         self.__service.modify_bill(old_bill, new_bill)
+
+    def add_items_to_bill(self, bill):
+        number = int(input("How many items do you wish to add?"))
+        while number != 0:
+            try:
+                self.__service.add_item_to_bill(self.choose_item(), bill)
+                number -= 1
+            except Exception as exp:
+                print(exp)
