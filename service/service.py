@@ -46,7 +46,7 @@ class Service:
         self.validator.validate_item(new_item)
         self.__item_repo.modify_item(old_item, new_item)
 
-    def view_item(self):
+    def view_items(self):
         return self.__item_repo.view_all_item()
 
     def choose_item(self, item_id):
@@ -70,13 +70,16 @@ class Service:
     def view_currency(self):
         return self.__currency_repo.get_all()
 
+    def get_currency(self, index):
+        return self.__currency_repo.get(index)
+
     # Bill Options
     def create_bill(self, bill):
         self.validator.validate_bill(bill)
         self.__bill_service.create_bill(bill)
 
-    def delete_bill(self, bill_id):
-        self.__bill_service.delete_bill(bill_id)
+    def delete_bill(self, bill):
+        self.__bill_service.delete_bill(bill)
 
     def modify_bill(self, old_bill, new_bill):
         self.validator.validate_bill(new_bill)

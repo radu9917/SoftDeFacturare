@@ -5,7 +5,10 @@ from domain.company import Company
 
 class TestCompanyRepo(unittest.TestCase):
     def test_company_repo(self):
-        company = Company("La Gigi", "RO0231", "6859662")
+        company = Company()
+        company.set_company_name("La Gigi")
+        company.set_fiscal_no("RO0123")
+        company.set_registration_number("123456")
         company.set_id(1)
         company.set_first_name("Gigi")
         company.set_last_name("Petre")

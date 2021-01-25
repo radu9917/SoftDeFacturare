@@ -2,9 +2,9 @@ from domain.customer import Customer
 
 
 class Individual(Customer):
-    def __init__(self, cnp):
+    def __init__(self):
         super().__init__(None, None, None, None)
-        self.__cnp = cnp
+        self.__cnp = None
 
     def get_cnp(self):
         return self.__cnp
@@ -24,3 +24,6 @@ class Individual(Customer):
         if self.get_cnp() != other.get_cnp():
             return False
         return True
+
+    def __str__(self):
+        return "Individual " + self.get_first_name() + " " + self.get_last_name()

@@ -5,7 +5,8 @@ from domain.individual import Individual
 
 class TestIndividualRepo(unittest.TestCase):
     def test_individual_repo(self):
-        individual1= Individual("1991212042312")
+        individual1 = Individual()
+        individual1.set_cnp("1991212042312")
         individual1.set_id(1)
         individual1.set_phone_number("0753123487")
         individual1.set_first_name("Petre")
@@ -14,7 +15,8 @@ class TestIndividualRepo(unittest.TestCase):
         individual_repo = CustomerRepo(Individual)
         individual_repo.store(individual1)
         self.assertEqual(len(individual_repo.get_all()), 1)
-        individual2 = Individual("1981216065431")
+        individual2 = Individual()
+        individual2.set_cnp("1981216065431")
         individual2.set_id(2)
         individual2.set_last_name("Claurentiu")
         individual2.set_first_name("Petre")

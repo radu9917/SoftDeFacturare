@@ -68,3 +68,6 @@ class Item(Entity):
 
     def increase_quantity(self):
         self.__quantity += 1
+
+    def __str__(self):
+        return str(self.get_id()) + ". " + self.__name + "-" + self.__price + self.__currency.get_symbol()

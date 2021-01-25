@@ -47,7 +47,8 @@ class TestService(unittest.TestCase):
 
     def test_individual_customer(self):
         service = Service(CurrencyRepo())
-        individual = Individual("1971209075425")
+        individual = Individual()
+        individual.set_cnp("1971209075425")
         individual.set_id(1)
         individual.set_first_name("Petre")
         individual.set_last_name("Vasile")
@@ -65,8 +66,11 @@ class TestService(unittest.TestCase):
 
     def test_company_customer(self):
         service = Service(CurrencyRepo())
-        company = Company("La Geani", "RO0123", "0000231523647")
+        company = Company()
         company.set_id(1)
+        company.set_company_name("La Geani")
+        company.set_registration_number("RO0123")
+        company.set_fiscal_no("0000231523647")
         company.set_first_name("Petre")
         company.set_last_name("Vasile")
         company.set_phone_number("0745321784")
@@ -82,14 +86,18 @@ class TestService(unittest.TestCase):
 
     def test_invoice_bill(self):
         service = Service(CurrencyRepo())
-        company = Company("La Geani", "RO0123", "523647")
+        company = Company()
+        company.set_company_name("La Geani")
+        company.set_registration_number("RO0123")
+        company.set_fiscal_no("0000231523647")
         company.set_email_address("la_geani@gmail.com")
         company.set_first_name("Ion")
         company.set_last_name("Bogdan")
         company.set_phone_number("0752314567")
         company.set_fiscal_no("0000012345678")
         company.set_registration_number("RO01923")
-        individual = Individual("1971209075425")
+        individual = Individual()
+        individual.set_cnp("1971209075425")
         individual.set_id(1)
         individual.set_first_name("Petre")
         individual.set_last_name("Vasile")

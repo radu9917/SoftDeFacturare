@@ -10,7 +10,8 @@ import unittest
 class TestValidator(unittest.TestCase):
     def test_validator(self):
         validator = Validator.get_instance()
-        customer = Individual("198121203415")
+        customer = Individual()
+        customer.set_cnp("198121203415")
         customer.set_last_name("Dan")
         customer.set_first_name("Popescu")
         customer.set_phone_number("0756234876")
@@ -21,7 +22,10 @@ class TestValidator(unittest.TestCase):
         item.set_price(2)
         item.set_discount(0)
         item.set_currency(currency)
-        company = Company("La Geani", "RO0123", "523647")
+        company = Company()
+        company.set_company_name("La Gigi")
+        company.set_fiscal_no("RO0123")
+        company.set_registration_number("123456")
         company.set_email_address("la_geani@gmail.com")
         company.set_first_name("Ion")
         company.set_last_name("Bogdan")

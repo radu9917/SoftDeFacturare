@@ -39,3 +39,5 @@ class Currency(Entity):
             return False
         return True
 
+    def __str__(self):
+        return str(self.get_id()) + ". " + self.__code
