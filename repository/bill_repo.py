@@ -21,13 +21,13 @@ class BillRepo(IRepo):
 
     def get(self, bill_id):
         for bill in self.get_all():
-            if bill.get_bill_id() == bill_id:
+            if bill.get_id() == bill_id:
                 return copy.deepcopy(bill)
         return None
 
     def delete(self, bill_id):
         for bill in self.get_all():
-            if bill.get_bill_id() == bill_id:
+            if bill.get_id() == bill_id:
                 self._list.remove(bill)
                 return bill
 
@@ -37,8 +37,8 @@ class BillRepo(IRepo):
         if not type(new_obj) in self._implemented_objects:
             raise Exception("Type is not allowed")
         for bill in self._list:
-            if old_obj.get_bill_id() == bill.get_bill_id():
+            if old_obj.get_id() == bill.get_id():
                 old_bill = bill
-                self.delete(bill.get_bill_id())
+                self.delete(bill.get_id())
                 self.store(new_obj)
                 return old_bill

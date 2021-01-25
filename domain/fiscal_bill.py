@@ -7,6 +7,6 @@ class FiscalBill(Bill):
 
     def __str__(self):
 
-        string = ("Fiscal Bill #" + str(self.get_bill_id()) + "\n")
+        string = ("Fiscal Bill #" + str(self.get_id()) + "\n")
         string += super().__str__()
         return string

@@ -1,6 +1,7 @@
 from service.service_customer import CustomerService
 from service.service_bill import BillService
 from service.service_item import ItemService
+from validator.validator import Validator
 
 
 class Service:
@@ -9,6 +10,7 @@ class Service:
         self.__item_repo = ItemService()
         self.__customer_service = CustomerService()
         self.__bill_service = BillService()
+        self.validator = Validator.get_instance()
 
     # Customer options
     def create_customer(self, customer):
@@ -26,18 +28,26 @@ class Service:
     def view_company_customer(self, customer_id):
         return self.__customer_service.choose_company_customer(customer_id)
 
+    def view_all_individual_customer(self):
+        return self.__customer_service.view_all_individual()
+
+    def view_all_company_customer(self):
+        return self.__customer_service.view_all_company()
+
     # Item Options
     def create_item(self, item):
+        self.validator.validate_item(item)
         self.__item_repo.create_item(item)
 
     def delete_item(self, item_id):
         self.__item_repo.delete_item(item_id)
 
     def modify_item(self, old_item, new_item):
+        self.validator.validate_item(new_item)
         self.__item_repo.modify_item(old_item, new_item)
 
     def view_item(self):
-        return self.__item_repo.view_item()
+        return self.__item_repo.view_all_item()
 
     def choose_item(self, item_id):
         return self.__item_repo.choose_item(item_id)
@@ -62,12 +72,14 @@ class Service:
 
     # Bill Options
     def create_bill(self, bill):
+        self.validator.validate_bill(bill)
         self.__bill_service.create_bill(bill)
 
     def delete_bill(self, bill_id):
         self.__bill_service.delete_bill(bill_id)
 
     def modify_bill(self, old_bill, new_bill):
+        self.validator.validate_bill(new_bill)
         self.__bill_service.update_bill(old_bill, new_bill)
 
     def choose_fiscal_bill(self, bill_id):

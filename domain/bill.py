@@ -11,7 +11,7 @@ class Bill:
         self.__bill_id = None
 
     # GETTERS
-    def get_bill_id(self):
+    def get_id(self):
         return self.__bill_id
 
     def get_issuer(self):
@@ -39,7 +39,7 @@ class Bill:
         return self.__tax
 
     # SETTERS
-    def set_bill_id(self, bill_id):
+    def set_id(self, bill_id):
         self.__bill_id = bill_id
 
     def set_issuer(self, issuer):
@@ -67,7 +67,7 @@ class Bill:
         self.__tax = tax
 
     def __eq__(self, other):
-        if self.get_bill_id() != other.get_bill_id():
+        if self.get_id() != other.get_id():
             return False
         if self.get_currency() != other.get_currency():
             return False
@@ -93,7 +93,7 @@ class Bill:
                 self.__items.append(item_to_add)
             else:
                 item.increase_quantity()
-        self.__tax += item_to_add.get_price()
+        self.__tax += item_to_add.get_price() - item_to_add.get_discount()
 
     def __str__(self):
         customer = self.get_customer()

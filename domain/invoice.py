@@ -7,6 +7,6 @@ class Invoice(Bill):
 
     def __str__(self):
 
-        string = ("Invoice #" + str(self.get_bill_id()) + "\n")
+        string = ("Invoice #" + str(self.get_id()) + "\n")
         string += super().__str__()
         return string

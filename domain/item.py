@@ -8,7 +8,7 @@ class Item(Entity):
         self.__name = None
         self.__description = None
         self.__price = None
-        self.__discount = None
+        self.__discount = 0
         self.__currency = None
         self.__quantity = 1
 
