@@ -20,13 +20,13 @@ class TestService(unittest.TestCase):
         item.set_price(2)
         item.set_discount(0)
         service.create_item(item)
-        self.assertEqual([item], service.view_item())
+        self.assertEqual([item], service.view_items())
         item.set_price(3)
         item.set_id(2)
         service.modify_item(1, item)
-        self.assertEqual(service.view_item(), [item])
+        self.assertEqual(service.view_items(), [item])
         service.delete_item(item)
-        self.assertEqual(service.view_item(), [])
+        self.assertEqual(service.view_items(), [])
 
     def test_currency_options(self):
         service = Service(CurrencyRepo())

@@ -5,8 +5,11 @@ import copy
 class ItemRepo(IRepo):
     def __init__(self):
         self._list = []
+        self._id = 1
 
     def store(self, item):
+        item.set_id(self._id)
+        self._id += 1
         self._list.append(copy.deepcopy(item))
         return item
 

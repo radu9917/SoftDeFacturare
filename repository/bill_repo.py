@@ -9,10 +9,13 @@ class BillRepo(IRepo):
         self._list = []
         self._repo_type = repo_type
         self._implemented_objects = [FiscalBill, Invoice]
+        self._id = 1
 
     def store(self, bill):
         if not type(bill) in self._implemented_objects:
             raise Exception("Type is not allowed")
+        bill.set_id(self._id)
+        self._id += 1
         self._list.append(copy.deepcopy(bill))
         return bill
 

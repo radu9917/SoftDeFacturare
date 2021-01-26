@@ -49,3 +49,9 @@ class CustomerService:
 
     def view_all_company(self):
         return self.__company_repo.get_all()
+
+    def get_customer(self, customer_type):
+        if isinstance(customer_type, Individual):
+            return self.__individual_repo.get(customer_type.get_id())
+        if isinstance(customer_type, Company):
+            return self.__company_repo.get(customer_type.get_id())

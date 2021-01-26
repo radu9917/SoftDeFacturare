@@ -34,6 +34,9 @@ class Service:
     def view_all_company_customer(self):
         return self.__customer_service.view_all_company()
 
+    def get_customer(self, customer_type):
+        return self.__customer_service.get_customer(customer_type)
+
     # Item Options
     def create_item(self, item):
         self.validator.validate_item(item)

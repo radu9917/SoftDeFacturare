@@ -9,10 +9,13 @@ class CustomerRepo(IRepo):
         self._list = []
         self._repo_type = repo_type
         self._implemented_objects = [Company, Individual]
+        self._id = 1
 
     def store(self, customer):
         if type(customer) != self._repo_type:
             raise Exception("Type is not allowed")
+        customer.set_id(self._id)
+        self._id += 1
         self._list.append(copy.deepcopy(customer))
         return customer
 
