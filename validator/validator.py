@@ -82,7 +82,7 @@ class Validator:
             self.validate_company(customer)
         self.validate_currency(bill.get_currency())
         for item in bill.get_items():
-            self.validate_item(item)
+            self.validate_item(item[0])
         self.validate_company(bill.get_issuer())
         self.validate_date(bill.get_due_date())
         self.validate_date(bill.get_issue_date())
@@ -92,7 +92,7 @@ class Validator:
     # ID CHECK
     def find_id(self, index, obj_list):
         found = False
-        if not index.isdecimal():
+        if not str(index).isdecimal():
             raise IdError("Invalid Id")
         for ob in obj_list:
             if ob.get_id() == int(index):

@@ -12,8 +12,9 @@ class CustomerService:
 
     def create_customer(self, customer):
         if isinstance(customer, Individual):
-            self.__individual_repo.store(customer)
             self.__validator.validate_individual(customer)
+            self.__individual_repo.store(customer)
+
         if isinstance(customer, Company):
             self.__validator.validate_company(customer)
             self.__company_repo.store(customer)

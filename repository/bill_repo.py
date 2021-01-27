@@ -9,13 +9,13 @@ class BillRepo(IRepo):
         self._list = []
         self._repo_type = repo_type
         self._implemented_objects = [FiscalBill, Invoice]
-        self._id = 1
+        self._index = 1
 
     def store(self, bill):
         if not type(bill) in self._implemented_objects:
             raise Exception("Type is not allowed")
-        bill.set_id(self._id)
-        self._id += 1
+        bill.set_id(self._index)
+        self._index += 1
         self._list.append(copy.deepcopy(bill))
         return bill
 
@@ -42,9 +42,9 @@ class BillRepo(IRepo):
         for bill in self._list:
             if old_obj.get_id() == bill.get_id():
                 old_bill = bill
-                old = self._id
-                self._id = old_obj.get_id
+                old = self._index
+                self._index = old_obj.get_id()
                 self.delete(bill.get_id())
                 self.store(new_obj)
-                self._id = old
+                self._index = old
                 return old_bill

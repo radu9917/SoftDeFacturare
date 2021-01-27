@@ -46,7 +46,7 @@ class Service:
         self.__item_repo.create_item(item)
 
     def delete_item(self, item_id):
-        self.__validator.find_id(str(item_id))
+        self.__validator.find_id(item_id, self.__item_repo.view_all_item())
         self.__item_repo.delete_item(item_id)
 
     def modify_item(self, old_item, new_item):

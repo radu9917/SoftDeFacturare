@@ -31,6 +31,7 @@ class JsonItemRepo(ItemRepo):
             discount = item.get_discount()
             price = item.get_price()
             currency = item.get_currency()
+            percent_discount = item.get_percent_discount()
             currency_dict = {
                 "symbol": currency.get_symbol(),
                 "name": currency.get_name(),
@@ -42,7 +43,8 @@ class JsonItemRepo(ItemRepo):
                 "description": description,
                 "discount": discount,
                 "price": price,
-                "currency": currency_dict
+                "currency": currency_dict,
+                "percent_discount": percent_discount
             }
             item_list.append(item_dict)
         file = open(self.__file_name, "w")
@@ -66,6 +68,7 @@ class JsonItemRepo(ItemRepo):
                 item.set_price(item["price"])
                 item.set_discount(item["discount"])
                 item.set_description(item["description"])
+                item.set_percent_discount(item["percent_discount"])
                 item.set_currency(currency)
                 self._list.append(item_to_store)
         file.close()

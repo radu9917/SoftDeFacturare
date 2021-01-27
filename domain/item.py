@@ -10,8 +10,13 @@ class Item(Entity):
         self.__price = None
         self.__discount = 0
         self.__currency = None
+        self.__percent_discount = None
 
     # SETTERS
+
+    def set_percent_discount(self, percent_discount):
+        self.__percent_discount = percent_discount
+
     def set_name(self, name):
         self.__name = name
 
@@ -32,6 +37,9 @@ class Item(Entity):
         self.__price = price
 
     # GETTERS
+    def get_percent_discount(self):
+        return self.__percent_discount
+
     def get_name(self):
         return self.__name
 

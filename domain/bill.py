@@ -89,13 +89,14 @@ class Bill:
 
     def add_items(self, item_to_add):
         found = False
-        for item in self.get_items()[0]:
-            if item == item_to_add:
-                item[1] += 1
+        for index in self.get_items():
+            if index[0] == item_to_add:
+                item = (item_to_add, index[1] + 1)
                 found = True
+                self.__items.remove(index)
         if not found:
             item = (item_to_add, 1)
-            self.__items.append(item)
+        self.__items.append(item)
         self.__tax += item_to_add.get_price() - item_to_add.get_discount()
 
     def __str__(self):

@@ -17,10 +17,8 @@ class TestCompanyRepo(unittest.TestCase):
         company_repo = CustomerRepo(Company)
         company_repo.store(company)
         self.assertEqual(company_repo.get(1), company)
-
         company.set_company_name("La Gigi Acasa")
-        company.set_id(2)
-        company_repo.update(company_repo.get(1), company)
-        self.assertEqual(company_repo.get(2), company)
+        company_repo.update(1, company)
+        self.assertEqual(company_repo.get(1), company)
         company_repo.delete(company.get_id())
         self.assertEqual(company_repo.get_all(), [])
