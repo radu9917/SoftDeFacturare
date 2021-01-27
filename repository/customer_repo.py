@@ -35,13 +35,14 @@ class CustomerRepo(IRepo):
         return None
 
     def update(self, old_customer, new_customer):
-        if not type(old_customer) in self._implemented_objects:
-            raise Exception("Type is not allowed")
         if not type(new_customer) in self._implemented_objects:
             raise Exception("Type is not allowed")
 
         for customer in self._list:
-            if old_customer.get_id() == customer.get_id():
-                self.delete(old_customer.get_id())
+            if old_customer == customer.get_id():
+                old = self._id
+                self._id = old_customer
+                self.delete(old_customer)
                 self.store(new_customer)
+                self._id = old
                 return old_customer

@@ -1,5 +1,6 @@
 from validator.exceptions import DataError
 from validator.exceptions import IdError
+from validator.exceptions import OptionError
 from domain.individual import Individual
 from domain.company import Company
 
@@ -88,16 +89,20 @@ class Validator:
         if type(bill.get_tax()) != int:
             raise DataError("Invalid tax")
 
-    # ID CHECKS
-    def is_id(self, index, obj_list):
-        for ob in obj_list:
-            if ob.get_id() == index:
-                raise IdError("Id already exists")
-
+    # ID CHECK
     def find_id(self, index, obj_list):
         found = False
+        if not index.isdecimal():
+            raise IdError("Invalid Id")
         for ob in obj_list:
-            if ob.get_id() == index:
+            if ob.get_id() == int(index):
                 found = True
         if not found:
             raise IdError("Id does not exist")
+
+    # OPTION CHECK
+    def option_check(self, option, set_max):
+        if not option.isdecimal():
+            raise OptionError("Invalid option")
+        if int(option) > set_max :
+            raise OptionError("Option does not exist")

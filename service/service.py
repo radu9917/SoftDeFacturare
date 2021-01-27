@@ -10,7 +10,7 @@ class Service:
         self.__item_repo = ItemService()
         self.__customer_service = CustomerService()
         self.__bill_service = BillService()
-        self.validator = Validator.get_instance()
+        self.__validator = Validator.get_instance()
 
     # Customer options
     def create_customer(self, customer):
@@ -34,19 +34,23 @@ class Service:
     def view_all_company_customer(self):
         return self.__customer_service.view_all_company()
 
-    def get_customer(self, customer_type):
-        return self.__customer_service.get_customer(customer_type)
+    def get_individual_customer(self, customer_id):
+        return self.__customer_service.get_customer(customer_id, "Individual")
+
+    def get_company_customer(self, customer_id):
+        return self.__customer_service.get_customer(customer_id, "Company")
 
     # Item Options
     def create_item(self, item):
-        self.validator.validate_item(item)
+        self.__validator.validate_item(item)
         self.__item_repo.create_item(item)
 
     def delete_item(self, item_id):
+        self.__validator.find_id(str(item_id))
         self.__item_repo.delete_item(item_id)
 
     def modify_item(self, old_item, new_item):
-        self.validator.validate_item(new_item)
+        self.__validator.validate_item(new_item)
         self.__item_repo.modify_item(old_item, new_item)
 
     def view_items(self):
@@ -58,17 +62,17 @@ class Service:
     def add_item_to_bill(self, item_id, bill):
         item = self.choose_item(item_id)
         bill.add_items(item)
-        self.__bill_service.update_bill(bill, bill)
+        self.__bill_service.update_bill(bill.get_id(), bill)
 
     # Currency Options
     def create_currency(self, currency):
         self.__currency_repo.store(currency)
 
     def delete_currency(self, currency_id):
-        self.__currency_repo.delete(currency_id)
+        self.__currency_repo.delete(int(currency_id))
 
     def modify_currency(self, old_currency, new_currency):
-        self.__currency_repo.update(self.__currency_repo.get(old_currency), new_currency)
+        self.__currency_repo.update(int(old_currency), new_currency)
 
     def view_currency(self):
         return self.__currency_repo.get_all()
@@ -78,14 +82,14 @@ class Service:
 
     # Bill Options
     def create_bill(self, bill):
-        self.validator.validate_bill(bill)
+        self.__validator.validate_bill(bill)
         self.__bill_service.create_bill(bill)
 
     def delete_bill(self, bill):
         self.__bill_service.delete_bill(bill)
 
     def modify_bill(self, old_bill, new_bill):
-        self.validator.validate_bill(new_bill)
+        self.__validator.validate_bill(new_bill)
         self.__bill_service.update_bill(old_bill, new_bill)
 
     def choose_fiscal_bill(self, bill_id):
@@ -99,3 +103,9 @@ class Service:
 
     def print_invoice(self, bill_id):
         return self.__bill_service.print_invoice(bill_id)
+
+    def get_fiscal(self, index):
+        return self.__bill_service.get_fiscal(int(index))
+
+    def get_invoice(self, index):
+        return self.__bill_service.get_invoice(int(index))

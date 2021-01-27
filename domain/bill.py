@@ -88,11 +88,14 @@ class Bill:
         return True
 
     def add_items(self, item_to_add):
-        for item in self.get_items():
-            if item != item_to_add:
-                self.__items.append(item_to_add)
-            else:
-                item.increase_quantity()
+        found = False
+        for item in self.get_items()[0]:
+            if item == item_to_add:
+                item[1] += 1
+                found = True
+        if not found:
+            item = (item_to_add, 1)
+            self.__items.append(item)
         self.__tax += item_to_add.get_price() - item_to_add.get_discount()
 
     def __str__(self):

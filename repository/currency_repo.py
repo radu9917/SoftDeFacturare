@@ -15,7 +15,7 @@ class CurrencyRepo(IRepo):
 
     def delete(self, currency_to_delete):
         for currency in self.get_all():
-            if currency.get_id() == currency_to_delete.get_id():
+            if currency.get_id() == currency_to_delete:
                 self._list.remove(currency)
                 return currency
 
@@ -30,7 +30,10 @@ class CurrencyRepo(IRepo):
 
     def update(self, old_currency, new_currency):
         for currency in self._list:
-            if currency.get_id() == old_currency.get_id():
+            if currency.get_id() == old_currency:
                 self.delete(old_currency)
+                old = self._id
+                self._id = old_currency
                 self.store(new_currency)
+                self._id = old
                 return old_currency

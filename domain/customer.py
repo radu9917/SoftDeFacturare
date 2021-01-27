@@ -36,10 +36,14 @@ class Customer(Entity):
         self.__phone_number = phone_number
 
     def __eq__(self, other):
-        if self.__last_name == other.get_last_name():
-            if self.__first_name == other.get_first_name():
-                if self.__phone_number == other.get_phone_number():
-                    if self.__email_address == other.get_email_address():
-                        if self.get_id() == other.get_id():
-                            return True
-        return False
+        if self.__last_name != other.get_last_name():
+            return False
+        if self.__first_name != other.get_first_name():
+            return False
+        if self.__phone_number != other.get_phone_number():
+            return False
+        if self.__email_address != other.get_email_address():
+            return False
+        if self.get_id() != other.get_id():
+            return False
+        return True

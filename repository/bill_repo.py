@@ -42,6 +42,9 @@ class BillRepo(IRepo):
         for bill in self._list:
             if old_obj.get_id() == bill.get_id():
                 old_bill = bill
+                old = self._id
+                self._id = old_obj.get_id
                 self.delete(bill.get_id())
                 self.store(new_obj)
+                self._id = old
                 return old_bill

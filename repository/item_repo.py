@@ -24,13 +24,16 @@ class ItemRepo(IRepo):
 
     def delete(self, item_to_delete):
         for item in self.get_all():
-            if item.get_id() == item_to_delete.get_id():
+            if item.get_id() == item_to_delete:
                 self._list.remove(item)
                 return item
 
     def update(self, old_item, new_item):
         for item in self._list:
-            if item.get_id() == old_item.get_id():
+            if item.get_id() == old_item:
+                old = self._id
+                self._id = old_item
                 self.delete(old_item)
                 self.store(new_item)
+                self._id = old
                 return old_item

@@ -1,0 +1,11 @@
+{
+  "current_currency_index": 1,
+  "currency_list": [
+    {
+      "id": 1,
+      "symbol": "$",
+      "name": "dollar",
+      "code": "USD"
+    }
+  ]
+}

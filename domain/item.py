@@ -10,7 +10,6 @@ class Item(Entity):
         self.__price = None
         self.__discount = 0
         self.__currency = None
-        self.__quantity = 1
 
     # SETTERS
     def set_name(self, name):
@@ -48,9 +47,6 @@ class Item(Entity):
     def get_price(self):
         return self.__price
 
-    def get_quantity(self):
-        return self.__quantity
-
     def __eq__(self, other):
         if self.get_id() != other.get_id():
             return False
@@ -66,8 +62,5 @@ class Item(Entity):
             return False
         return True
 
-    def increase_quantity(self):
-        self.__quantity += 1
-
     def __str__(self):
-        return str(self.get_id()) + ". " + self.__name + "-" + self.__price + self.__currency.get_symbol()
+        return str(self.get_id()) + ". " + self.__name + "-" + str(self.__price) + self.__currency.get_symbol()

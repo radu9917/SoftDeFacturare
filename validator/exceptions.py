@@ -4,3 +4,7 @@ class DataError(Exception):
 
 class IdError(Exception):
     pass
+
+
+class OptionError(Exception):
+    pass
