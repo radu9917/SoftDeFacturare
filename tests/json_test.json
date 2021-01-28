@@ -1,4 +1,6 @@
 {
-    "current_item_index": 1,
-    "item_list": []
+    "current_company_id": 1,
+    "current_individual_id": 1,
+    "individual_list": [],
+    "company_list": []
 }
