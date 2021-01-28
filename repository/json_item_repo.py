@@ -47,28 +47,36 @@ class JsonItemRepo(ItemRepo):
                 "percent_discount": percent_discount
             }
             item_list.append(item_dict)
+        json_list = {
+            "current_item_index": self._id,
+            "item_list": item_list
+            }
         file = open(self.__file_name, "w")
-        string = json.dumps(item_list, indent=4)
+        string = json.dumps(json_list, indent=4)
         file.write(string)
         file.close()
 
     def __load_from_file(self):
         file = open(self.__file_name, "r")
         json_file = json.loads(file.read())
-        if "id" in json_file:
-            self._id = json_file["id"]
-        if "item" in json_file:
+        if "current_item_index" in json_file:
+            self._id = json_file["current_item_index"]
+        if "item_list" in json_file:
             for item in json_file["item_list"]:
                 symbol = item["currency"]["symbol"]
                 name = item["currency"]["name"]
                 code = item["currency"]["code"]
                 currency = Currency(symbol, name, code)
                 item_to_store = Item()
-                item.set_name(item["name"])
-                item.set_price(item["price"])
-                item.set_discount(item["discount"])
-                item.set_description(item["description"])
-                item.set_percent_discount(item["percent_discount"])
-                item.set_currency(currency)
+                item_to_store.set_id(item["id"])
+                item_to_store.set_name(item["name"])
+                item_to_store.set_price(item["price"])
+                item_to_store.set_discount(item["discount"])
+                item_to_store.set_description(item["description"])
+                item_to_store.set_percent_discount(item["percent_discount"])
+                item_to_store.set_currency(currency)
                 self._list.append(item_to_store)
         file.close()
+
+    def reset_id(self):
+        self._id = 1

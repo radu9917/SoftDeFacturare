@@ -31,7 +31,7 @@ class ItemRepo(IRepo):
     def update(self, old_item, new_item):
         for item in self._list:
             if item.get_id() == old_item:
-                old = self._id
+                old = self._id - 1
                 self._id = old_item
                 self.delete(old_item)
                 self.store(new_item)
