@@ -1,13 +1,13 @@
 from domain.invoice import Invoice
 from domain.fiscal_bill import FiscalBill
-from repository.bill_repo import BillRepo
+from repository.json_bill_repo import JsonBillRepo
 from validator.validator import Validator
 
 
 class BillService:
     def __init__(self):
-        self.__invoice_repo = BillRepo(Invoice)
-        self.__fiscal_bill_repo = BillRepo(FiscalBill)
+        self.__invoice_repo = JsonBillRepo("bill.json", Invoice)
+        self.__fiscal_bill_repo = JsonBillRepo("bill.json", FiscalBill)
         self.__validator = Validator.get_instance()
 
     def create_bill(self, bill):

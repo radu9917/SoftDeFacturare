@@ -1,12 +1,13 @@
 from service.service_customer import CustomerService
 from service.service_bill import BillService
 from service.service_item import ItemService
+from repository.json_currency_repo import JsonCurrencyRepo
 from validator.validator import Validator
 
 
 class Service:
-    def __init__(self, currency_repo):
-        self.__currency_repo = currency_repo
+    def __init__(self):
+        self.__currency_repo = JsonCurrencyRepo("currency.json")
         self.__item_repo = ItemService()
         self.__customer_service = CustomerService()
         self.__bill_service = BillService()

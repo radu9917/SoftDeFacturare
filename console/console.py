@@ -12,7 +12,7 @@ from validator.exceptions import OptionError
 
 class Console:
     def __init__(self):
-        self.__service = Service(CurrencyRepo())
+        self.__service = Service()
         self.__validator = Validator.get_instance()
 
     # Customer options
@@ -76,19 +76,19 @@ class Console:
             print(exp)
 
     def modify_customer(self):
-        # try:
-        option = self.choose_customer_type()
-        print("What customer do you want to change?")
-        index = int(input("Give id: "))
-        option.set_id(index)
-        print("Create the customer you want to add")
-        if isinstance(option, Individual):
-            new_customer = self.create_individual()
-        if isinstance(option, Company):
-            new_customer = self.create_company()
-        self.__service.modify_customer(option.get_id(), new_customer)
-        # except Exception as exp:
-          #  print(exp)
+        try:
+            option = self.choose_customer_type()
+            print("What customer do you want to change?")
+            index = int(input("Give id: "))
+            option.set_id(index)
+            print("Create the customer you want to add")
+            if isinstance(option, Individual):
+                new_customer = self.create_individual()
+            if isinstance(option, Company):
+                new_customer = self.create_company()
+            self.__service.modify_customer(option.get_id(), new_customer)
+        except Exception as exp:
+            print(exp)
 
     def choose_customer_type(self):
         option = input("What type of customer database do you want to access?\n1-Individual or 2-Company customers?\n")

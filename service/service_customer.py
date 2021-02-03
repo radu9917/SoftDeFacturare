@@ -1,4 +1,4 @@
-from repository.customer_repo import CustomerRepo
+from repository.json_customer_repo import JsonCustomerRepo
 from domain.individual import Individual
 from domain.company import Company
 from validator.validator import Validator
@@ -6,8 +6,8 @@ from validator.validator import Validator
 
 class CustomerService:
     def __init__(self):
-        self.__individual_repo = CustomerRepo(Individual)
-        self.__company_repo = CustomerRepo(Company)
+        self.__individual_repo = JsonCustomerRepo("customer.json", Individual)
+        self.__company_repo = JsonCustomerRepo("customer.json", Company)
         self.__validator = Validator.get_instance()
 
     def create_customer(self, customer):

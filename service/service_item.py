@@ -1,10 +1,10 @@
-from repository.item_repo import ItemRepo
+from repository.json_item_repo import JsonItemRepo
 from validator.validator import Validator
 
 
 class ItemService:
     def __init__(self):
-        self.__item_repo = ItemRepo()
+        self.__item_repo = JsonItemRepo("item.json")
         self.__validator = Validator.get_instance()
 
     def create_item(self, item):
