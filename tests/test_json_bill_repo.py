@@ -10,7 +10,7 @@ import unittest
 
 class TestJsonBill(unittest.TestCase):
     def test_json_repo(self):
-        invoice_repo = JsonBillRepo("json_test.json",Invoice)
+        invoice_repo = JsonBillRepo("json_test.json", Invoice)
         company = Company()
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")
@@ -49,7 +49,7 @@ class TestJsonBill(unittest.TestCase):
         invoice_repo.store(invoice)
         self.assertEqual(invoice, invoice_repo.get(1))
         invoice.add_items(item)
-        invoice_repo.update(1,invoice)
-        self.assertEqual(invoice_repo.get(1),invoice)
+        invoice_repo.update(1, invoice)
+        self.assertEqual(invoice_repo.get(1), invoice)
         invoice_repo.reset_id()
         invoice_repo.delete(1)

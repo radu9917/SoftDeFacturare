@@ -6,8 +6,8 @@ from validator.validator import Validator
 
 class CustomerService:
     def __init__(self):
-        self.__individual_repo = JsonCustomerRepo("customer.json", Individual)
-        self.__company_repo = JsonCustomerRepo("customer.json", Company)
+        self.__individual_repo = JsonCustomerRepo("database/customer.json", Individual)
+        self.__company_repo = JsonCustomerRepo("database/customer.json", Company)
         self.__validator = Validator.get_instance()
 
     def create_customer(self, customer):

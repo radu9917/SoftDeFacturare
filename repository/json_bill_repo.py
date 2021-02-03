@@ -29,7 +29,7 @@ class JsonBillRepo(BillRepo):
     def __store_to_file(self):
         invoice_list = []
         fiscal_bill_list = []
-        bill_list =[]
+        bill_list = []
         for bill in self._list:
             company = bill.get_issuer()
             issuer = {
@@ -60,65 +60,71 @@ class JsonBillRepo(BillRepo):
                     "phone_number": customer.get_phone_number(),
                     "email_address": customer.get_email_address()
                 }
-                issue_date = bill.get_issue_date()
-                due_date = bill.get_due_date()
-                item_dict_list = []
-                item_list = bill.get_items()
-                for item in item_list:
-                    currency = item.get_currency()
-                    currency_dict = {
-                        "symbol": currency.get_symbol(),
-                        "name": currency.get_name(),
-                        "code": currency.get_code()
-                    }
-                    item_dict = {
-                        "currency": currency_dict,
-                        "name": item.get_name(),
-                        "price": item.get_price(),
-                        "description": item.get_description(),
-                        "discount": item.get_discount(),
-                        "percent_discount": item.get_percent_discount()
-                    }
-                    item_dict_list.append(item_dict)
-                currency = bill.get_currency()
+            issue_date = bill.get_issue_date()
+            due_date = bill.get_due_date()
+            item_dict_list = []
+            item_list = bill.get_items()
+            for item in item_list:
+                currency = item[0].get_currency()
                 currency_dict = {
                     "symbol": currency.get_symbol(),
                     "name": currency.get_name(),
                     "code": currency.get_code()
                 }
-                notes = bill.get_notes()
-                tax = bill.get_tax()
-                bill_id = bill.get_id()
-                bill_dict = {
-                    "id": bill_id,
-                    "issuer": issuer,
-                    "customer": customer_dict,
-                    "issue_date": issue_date,
-                    "due_date": due_date,
-                    "item_list": item_dict_list,
+                item_dict = {
                     "currency": currency_dict,
-                    "notes": notes,
-                    "tax": tax
+                    "name": item[0].get_name(),
+                    "price": item[0].get_price(),
+                    "description": item[0].get_description(),
+                    "discount": item[0].get_discount(),
+                    "percent_discount": item[0].get_percent_discount()
                 }
-                bill_list.append(bill_dict)
+                item_dict_list.append(item_dict)
+            currency = bill.get_currency()
+            symbol = currency.get_symbol()
+            name = currency.get_name()
+            code = currency.get_code()
+            exchange_rate = currency.get_exchange_rate()
+            currency_dict = {
+                "symbol": symbol,
+                "name": name,
+                "code": code,
+                "exchange_rate": exchange_rate
+            }
+            notes = bill.get_notes()
+            tax = bill.get_tax()
+            bill_id = bill.get_id()
+            bill_dict = {
+                "id": bill_id,
+                "issuer": issuer,
+                "customer": customer_dict,
+                "issue_date": issue_date,
+                "due_date": due_date,
+                "item_list": item_dict_list,
+                "currency": currency_dict,
+                "notes": notes,
+                "tax": tax
+            }
+            bill_list.append(bill_dict)
         file = open(self.__file_name, "r")
         json_file = json.loads(file.read())
         file.close()
+        current_fiscal_bill_id = None
+        current_invoice_id = None
         if self._repo_type == FiscalBill:
             fiscal_bill_list = bill_list
             current_fiscal_bill_id = self._id
-            if "invoice_list" in json_file:
+            if "invoice_list" in json_file and json_file["invoice_list"] != []:
                 invoice_list = json_file["invoice_list"]
             if "current_invoice_id" in json_file:
                 current_invoice_id = json_file["current_invoice_id"]
             else:
                 current_invoice_id = 1
-        current_fiscal_bill_id = None
-        current_invoice_id = None
+
         if self._repo_type == Invoice:
             invoice_list = bill_list
             current_invoice_id = self._id
-            if "fiscal_bill_list" in json_file:
+            if "fiscal_bill_list" in json_file and json_file["fiscal_bill_list"] != []:
                 fiscal_bill_list = json_file["fiscal_bill_list"]
             if "current_fiscal_bill_id" in json_file:
                 current_fiscal_bill_id = json_file["current_fiscal_bill_id"]
@@ -136,20 +142,19 @@ class JsonBillRepo(BillRepo):
         file.close()
 
     def __load_from_file(self):
-        index = "current_index"
         list_type = None
         bill_to_add = None
-        if self._repo_type == FiscalBill:
-            index = "current_fiscal_bill_id"
-            list_type = "fiscal_bill_list"
-        if self._repo_type == Invoice:
-            index = "current_invoice_id"
-            list_type = "invoice_list"
         file = open(self.__file_name, "r")
         json_file = json.loads(file.read())
         file.close()
-        if index in json_file:
-            self._id = json[index]
+        if self._repo_type == FiscalBill:
+            if "current_fiscal_bill_id" in json_file:
+                self._id = json_file["current_fiscal_bill_id"]
+            list_type = "fiscal_bill_list"
+        if self._repo_type == Invoice:
+            if "current_invoice_id" in json_file:
+                self._id = json_file["current_invoice_id"]
+            list_type = "invoice_list"
         if list_type in json_file:
             for bill in json_file[list_type]:
                 bill_id = bill["id"]
@@ -166,7 +171,7 @@ class JsonBillRepo(BillRepo):
                 issuer.set_phone_number(bill["issuer"]["phone_number"])
                 issuer.set_email_address(bill["issuer"]["email_address"])
                 bill_to_add.set_issuer(issuer)
-                bill_to_add.set_id(bill["id"])
+                customer = None
                 if "cnp" in bill["customer"]:
                     customer = Individual()
                     customer.set_first_name(bill["customer"]["first_name"])
@@ -201,6 +206,7 @@ class JsonBillRepo(BillRepo):
                     item_to_add.set_percent_discount(item["percent_discount"])
                     item_to_add.set_currency(currency)
                     item_list.append(item_to_add)
+                bill_to_add.set_id(bill_id)
                 bill_to_add.set_items(item_list)
                 bill_to_add.set_notes(bill["notes"])
                 bill_to_add.set_issue_date(bill["issue_date"])

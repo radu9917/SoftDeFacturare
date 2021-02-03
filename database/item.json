@@ -7,9 +7,10 @@
       "description": "A sweet fruit",
       "price": 2,
       "currency": {
-      "symbol": "$",
-      "name": "dollar",
-      "code": "USD"
+        "symbol": "$",
+        "name": "dollar",
+        "code": "USD",
+        "exchange_rate": 4.2
     },
       "discount": 0,
       "percent_discount": false

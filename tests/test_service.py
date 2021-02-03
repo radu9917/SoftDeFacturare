@@ -10,7 +10,7 @@ import unittest
 
 class TestService(unittest.TestCase):
     def test_item_options(self):
-        service = Service(CurrencyRepo())
+        service = Service()
         item = Item()
         currency = Currency("$", "Dollar", "USD")
         item.set_id(1)
@@ -29,7 +29,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(service.view_items(), [])
 
     def test_currency_options(self):
-        service = Service(CurrencyRepo())
+        service = Service()
         currency = Currency("$", "Dollar", "USD")
         currency.set_id(1)
         service.create_currency(currency)
@@ -45,7 +45,7 @@ class TestService(unittest.TestCase):
         self.test_company_customer()
 
     def test_individual_customer(self):
-        service = Service(CurrencyRepo())
+        service = Service()
         individual = Individual()
         individual.set_id(1)
         individual.set_cnp("190702123433")
@@ -63,7 +63,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(service.view_all_individual_customer(), [])
 
     def test_company_customer(self):
-        service = Service(CurrencyRepo())
+        service = Service()
         company = Company()
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")
@@ -82,7 +82,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(service.view_all_company_customer(), [])
 
     def test_invoice_bill(self):
-        service = Service(CurrencyRepo())
+        service = Service()
         company = Company()
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")

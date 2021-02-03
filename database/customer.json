@@ -1,27 +1,34 @@
 {
-  "current_individual_index": 1,
-  "current_company_index": 1,
-    "company_list": [
-    {
-      "id": 1,
-      "first_name": "Ion",
-      "last_name": "Radu",
-      "phone_number": "0758245170",
-      "email_address": "ion.radu17@yahoo.com",
-      "company_name": "Pleso Praduitoru",
-      "fiscal_no": "0000123456789",
-      "registation_number": "RO0123"
-    }
-  ],
+    "current_company_id": 1,
+    "current_individual_id": 2,
     "individual_list": [
-    {
-      "id": 1,
-      "cnp": "1991217098456",
-      "first_name": "Ion",
-      "last_name": "Radu",
-      "phone_number": "0758245170",
-      "email_address": "ion.radu17@yahoo.com"
-    }
-  ]
-
+        {
+            "id": 1,
+            "first_name": "Ion",
+            "last_name": "Radu",
+            "cnp": "1991217098456",
+            "phone_number": "0758245170",
+            "email_address": "ion.radu17@yahoo.com"
+        },
+        {
+            "id": 1,
+            "first_name": "Popescu",
+            "last_name": "Claurentiu",
+            "cnp": "1990101098654",
+            "phone_number": "0756778123",
+            "email_address": "popescu.claurentiu@gmail.com"
+        }
+    ],
+    "company_list": [
+        {
+            "id": 1,
+            "first_name": "Ion",
+            "last_name": "Radu",
+            "phone_number": "0758245170",
+            "email_address": "pleso.prd69@yahoo.com",
+            "company_name": "Pleso Praduitoru",
+            "fiscal_no": "0000123456789",
+            "registration_number": "RO0123"
+        }
+    ]
 }

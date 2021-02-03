@@ -7,7 +7,7 @@ class Bill:
         self.__items = []
         self.__currency = None
         self.__notes = None
-        self.__tax = 0
+        self.__tax = 0.0
         self.__bill_id = None
 
     # GETTERS
@@ -102,7 +102,7 @@ class Bill:
         price = item_to_add.get_price()
         tax_exchange_rate = self.__currency.get_exchange_rate()
         item_exchange_rate = item_to_add.get_currency().get_exchange_rate()
-        if item_to_add.get_discount_percent():
+        if item_to_add.get_percent_discount():
             self.__tax += (price - price * discount / 100) / item_exchange_rate * tax_exchange_rate
         else:
             self.__tax += (price - discount) / item_exchange_rate * tax_exchange_rate

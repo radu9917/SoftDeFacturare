@@ -86,7 +86,7 @@ class Validator:
         self.validate_company(bill.get_issuer())
         self.validate_date(bill.get_due_date())
         self.validate_date(bill.get_issue_date())
-        if type(bill.get_tax()) != int:
+        if type(bill.get_tax()) != float:
             raise DataError("Invalid tax")
 
     # ID CHECK

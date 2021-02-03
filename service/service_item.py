@@ -4,7 +4,7 @@ from validator.validator import Validator
 
 class ItemService:
     def __init__(self):
-        self.__item_repo = JsonItemRepo("item.json")
+        self.__item_repo = JsonItemRepo("database/item.json")
         self.__validator = Validator.get_instance()
 
     def create_item(self, item):

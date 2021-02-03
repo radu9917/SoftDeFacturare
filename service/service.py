@@ -7,7 +7,7 @@ from validator.validator import Validator
 
 class Service:
     def __init__(self):
-        self.__currency_repo = JsonCurrencyRepo("currency.json")
+        self.__currency_repo = JsonCurrencyRepo("database/currency.json")
         self.__item_repo = ItemService()
         self.__customer_service = CustomerService()
         self.__bill_service = BillService()

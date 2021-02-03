@@ -33,7 +33,7 @@ class TestBillRepo(unittest.TestCase):
         self.assertEqual(invoice_repo.get(1), invoice)
         invoice.set_items([item, item])
         invoice.set_tax(4)
-        invoice_repo.update(invoice_repo.get(1), invoice)
+        invoice_repo.update(1, invoice)
         self.assertEqual(invoice_repo.get(1), invoice)
         invoice_repo.delete(1)
         self.assertEqual(invoice_repo.get_all(), [])

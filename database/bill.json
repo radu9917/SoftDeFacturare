@@ -1,49 +1,6 @@
 {
-  "current_fiscal_bill_index":1,
-  "current_invoice_index": 1,
-  "fiscal_bills":
-  [
-    {
-      "id": 1,
-      "issuer": {
-        "first_name": "Ion",
-        "last_name": "Radu",
-        "phone_number": "0758245170",
-        "email_address": "ion.radu17@yahoo.com",
-        "company_name": "Pleso Praduitoru",
-        "fiscal_no": "0000123456789",
-        "registation_number": "RO0123"
-      },
-      "customer":{
-        "cnp": "1991217098456",
-        "first_name": "Ion",
-        "last_name": "Radu",
-        "phone_number": "0758245170",
-        "email_address": "ion.radu17@yahoo.com"
-      },
-      "issue_date": "12.12.2020",
-      "due_date": "12.01.2021",
-      "notes": "Pay as soon as possible",
-      "currency": {
-        "symbol": "$",
-        "name": "dollar",
-        "code": "USD"
-      },
-      "items": [
-        {
-          "name": "Apple",
-          "description": "A sweet fruit",
-          "price": 2,
-          "currency": {
-            "symbol": "$",
-            "name": "dollar",
-            "code": "USD"
-          },
-          "discount": 0,
-          "percent_discount": false
-        }
-      ],
-      "tax": 2
-    }
-  ]
+    "current_fiscal_bill_id": 1,
+    "current_invoice_id": 1,
+    "invoice_list": [],
+    "fiscal_bill_list": []
 }

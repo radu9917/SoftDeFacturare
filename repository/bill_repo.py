@@ -35,15 +35,13 @@ class BillRepo(IRepo):
                 return bill
 
     def update(self, old_obj, new_obj):
-        if not type(old_obj) in self._implemented_objects:
-            raise Exception("Type is not allowed")
         if not type(new_obj) in self._implemented_objects:
             raise Exception("Type is not allowed")
         for bill in self._list:
-            if old_obj.get_id() == bill.get_id():
+            if old_obj == bill.get_id():
                 old_bill = bill
                 old = self._id
-                self._id = old_obj.get_id()
+                self._id = old_obj
                 self.delete(bill.get_id())
                 self.store(new_obj)
                 self._id = old

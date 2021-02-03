@@ -76,6 +76,7 @@ class Console:
             print(exp)
 
     def modify_customer(self):
+        new_customer = None
         try:
             option = self.choose_customer_type()
             print("What customer do you want to change?")
@@ -144,6 +145,12 @@ class Console:
         item.set_description(input("Give description: "))
         item.set_price(int(input("Give price: ")))
         item.set_discount(int(input("Give discount: ")))
+        print("Is the discount a percent?\nYes of No")
+        percent = input()
+        if percent == "Yes":
+            item.set_percent_discount(True)
+        else:
+            item.set_percent_discount(False)
         item.set_currency(self.choose_currency())
         return item
 
@@ -198,7 +205,10 @@ class Console:
         symbol = input("Give currency symbol: ")
         name = input("Give currency name: ")
         code = input("Give currency code: ")
-        return Currency(symbol, name, code)
+        exchange_rate = 1 / float(input("Give exchange rate from created currency to RON"))
+        currency = Currency(symbol, name, code)
+        currency.set_exchange_rate(exchange_rate)
+        return currency
 
     def delete_currency(self):
         try:
@@ -245,25 +255,26 @@ class Console:
 
     def print_bill(self):
         bill = self.choose_bill_type()
-        if isinstance(bill, Invoice):
+        if bill == Invoice:
             print(self.__service.print_invoice(input("Give id: ")))
-        if isinstance(bill, FiscalBill):
+        if bill == FiscalBill:
             print(self.__service.print_fiscal_bill(input("Give id: ")))
 
     def choose_bill_type(self):
         correct = False
+        option = None
+        options = {
+            "2": FiscalBill,
+            "1": Invoice
+                }
         while not correct:
             try:
                 option = input("What type of bill database do you want to access? \n1-Invoices or 2-Fiscal Bills")
                 self.__validator.option_check(option, 2)
-                options = {
-                    "2": FiscalBill,
-                    "1": Invoice
-                }
                 correct = True
             except Exception as exp:
                 print(exp)
-        return options[option]()
+        return options[option]
 
     def create_bill(self):
         try:
@@ -274,9 +285,10 @@ class Console:
             print(exp)
 
     def input_bill(self, bill_type):
-        if isinstance(bill_type, FiscalBill):
+        bill = None
+        if bill_type == FiscalBill:
             bill = FiscalBill()
-        if isinstance(bill_type, Invoice):
+        if bill_type == Invoice:
             bill = Invoice()
 
         bill.set_customer(self.choose_customer(self.choose_customer_type()))
@@ -291,7 +303,8 @@ class Console:
     def delete_bill(self):
         try:
             bill = self.choose_bill_type()
-            bill.set_id(int(input("Which bill do you wish to delete")))
+            bill_id = input("Which bill do you wish to delete")
+            bill.set_id(int(bill_id))
             self.__service.delete_bill(bill)
         except Exception as exp:
             print(exp)
@@ -306,18 +319,19 @@ class Console:
             print(exp)
 
     def add_items_to_bill(self):
+        bill = None
         bill_type = self.choose_bill_type()
-        if isinstance(bill_type, FiscalBill):
+        if bill_type == FiscalBill:
             bill = self.__service.get_fiscal(input("Give id: "))
-        if isinstance(bill_type, Invoice):
+        if bill_type == Invoice:
             bill = self.__service.get_invoice(input("Give id: "))
         number = int(input("How many items do you wish to add?"))
         while number != 0:
-            try:
+           # try:
                 self.__service.add_item_to_bill(self.choose_item(), bill)
                 number -= 1
-            except Exception as exp:
-                print(exp)
+           # except Exception as exp:
+           #     print(exp)
 
     def run(self):
         while True:
