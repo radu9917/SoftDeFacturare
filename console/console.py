@@ -205,7 +205,7 @@ class Console:
         symbol = input("Give currency symbol: ")
         name = input("Give currency name: ")
         code = input("Give currency code: ")
-        exchange_rate = 1 / float(input("Give exchange rate from created currency to RON"))
+        exchange_rate = float(input("Give exchange rate from created currency to RON"))
         currency = Currency(symbol, name, code)
         currency.set_exchange_rate(exchange_rate)
         return currency
@@ -302,9 +302,14 @@ class Console:
 
     def delete_bill(self):
         try:
-            bill = self.choose_bill_type()
-            bill_id = input("Which bill do you wish to delete")
-            bill.set_id(int(bill_id))
+            bill = None
+            bill_type = self.choose_bill_type()
+            if bill_type == FiscalBill:
+                bill = FiscalBill()
+            if bill_type == Invoice:
+                bill = Invoice()
+            bill_id = int(input("Which bill do you wish to delete"))
+            bill.set_id(bill_id)
             self.__service.delete_bill(bill)
         except Exception as exp:
             print(exp)
@@ -327,11 +332,11 @@ class Console:
             bill = self.__service.get_invoice(input("Give id: "))
         number = int(input("How many items do you wish to add?"))
         while number != 0:
-           # try:
+            try:
                 self.__service.add_item_to_bill(self.choose_item(), bill)
                 number -= 1
-           # except Exception as exp:
-           #     print(exp)
+            except Exception as exp:
+                print(exp)
 
     def run(self):
         while True:

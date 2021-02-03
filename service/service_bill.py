@@ -18,7 +18,6 @@ class BillService:
             self.__fiscal_bill_repo.store(bill)
 
     def delete_bill(self, bill):
-
         if isinstance(bill, Invoice):
             self.__validator.find_id(str(bill.get_id()), self.__invoice_repo.get_all())
             self.__invoice_repo.delete(bill.get_id())
@@ -60,3 +59,17 @@ class BillService:
 
     def get_invoice(self, index):
         return self.__invoice_repo.get(index)
+
+    def invoice_to_fiscal(self, bill_id):
+        fiscal_bill = FiscalBill()
+        for bill in self.__invoice_repo.get_all():
+            if bill.get_id() == bill_id:
+                fiscal_bill.set_issuer(bill.get_issuer())
+                fiscal_bill.set_currency(bill.get_currency())
+                fiscal_bill.set_tax(bill.get_tax())
+                fiscal_bill.set_items(bill.get_items())
+                fiscal_bill.set_customer(bill.get_customer())
+                fiscal_bill.set_due_date(bill.get_due_date())
+                fiscal_bill.set_issue_date(bill.get_issue_date())
+                fiscal_bill.set_notes(bill.get_notes())
+                self.__fiscal_bill_repo.store(fiscal_bill)

@@ -89,6 +89,9 @@ class Service:
     def delete_bill(self, bill):
         self.__bill_service.delete_bill(bill)
 
+    def invoice_to_fiscal(self, bill_id):
+        self.__bill_service.invoice_to_fiscal(bill_id)
+
     def modify_bill(self, old_bill, new_bill):
         self.__validator.validate_bill(new_bill)
         self.__bill_service.update_bill(old_bill, new_bill)

@@ -103,9 +103,9 @@ class Bill:
         tax_exchange_rate = self.__currency.get_exchange_rate()
         item_exchange_rate = item_to_add.get_currency().get_exchange_rate()
         if item_to_add.get_percent_discount():
-            self.__tax += (price - price * discount / 100) / item_exchange_rate * tax_exchange_rate
+            self.__tax += (price - price * discount / 100) * item_exchange_rate / tax_exchange_rate
         else:
-            self.__tax += (price - discount) / item_exchange_rate * tax_exchange_rate
+            self.__tax += (price - discount) * item_exchange_rate / tax_exchange_rate
 
     def __str__(self):
         customer = self.get_customer()
