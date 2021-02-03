@@ -68,6 +68,8 @@ class Item(Entity):
             return False
         if self.get_description() != other.get_description():
             return False
+        if self.get_percent_discount() != other.get_percent_discount():
+            return False
         return True
 
     def __str__(self):

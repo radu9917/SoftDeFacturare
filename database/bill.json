@@ -38,7 +38,9 @@
             "symbol": "$",
             "name": "dollar",
             "code": "USD"
-          }
+          },
+          "discount": 0,
+          "percent_discount": false
         }
       ],
       "tax": 2

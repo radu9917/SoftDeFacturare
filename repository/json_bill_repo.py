@@ -191,6 +191,8 @@ class JsonBillRepo(BillRepo):
                     name = item["currency"]["name"]
                     code = item["currency"]["code"]
                     currency = Currency(symbol, name, code)
+                    exchange_rate = item["currency"]["exchange_rate"]
+                    currency.set_exchange_rate(exchange_rate)
                     item_to_add.set_id(item["id"])
                     item_to_add.set_name(item["name"])
                     item_to_add.set_price(item["price"])
@@ -208,6 +210,8 @@ class JsonBillRepo(BillRepo):
                 name = bill["currency"]["name"]
                 code = bill["currency"]["code"]
                 currency = Currency(symbol, name, code)
+                exchange_rate = bill["currency"]["exchange_rate"]
+                currency.set_exchange_rate(exchange_rate)
                 bill_to_add.set_currency(currency)
                 self._list.append(bill_to_add)
 

@@ -29,7 +29,8 @@ class JsonCurrencyRepo(CurrencyRepo):
                 "id": currency.get_id(),
                 "symbol": currency.get_symbol(),
                 "name": currency.get_name(),
-                "code": currency.get_code()
+                "code": currency.get_code(),
+                "exchange_rate": currency.get_exchange_rate()
             }
             currency_list.append(currency_dict)
         json_list = {
@@ -53,6 +54,8 @@ class JsonCurrencyRepo(CurrencyRepo):
                 code = currency["code"]
                 currency_to_add = Currency(symbol, name, code)
                 index = currency["id"]
+                exchange_rate = currency["exchange_rate"]
+                currency.set_exchange_rate(exchange_rate)
                 currency_to_add.set_id(index)
                 self._list.append(currency_to_add)
         file.close()

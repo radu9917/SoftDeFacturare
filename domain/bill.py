@@ -89,6 +89,7 @@ class Bill:
 
     def add_items(self, item_to_add):
         found = False
+        item = None
         for index in self.get_items():
             if index[0] == item_to_add:
                 item = (item_to_add, index[1] + 1)
@@ -97,7 +98,14 @@ class Bill:
         if not found:
             item = (item_to_add, 1)
         self.__items.append(item)
-        self.__tax += item_to_add.get_price() - item_to_add.get_discount()
+        discount = item_to_add.get_discount()
+        price = item_to_add.get_price()
+        tax_exchange_rate = self.__currency.get_exchange_rate()
+        item_exchange_rate = item_to_add.get_currency().get_exchange_rate()
+        if item_to_add.get_discount_percent():
+            self.__tax += (price - price * discount / 100) / item_exchange_rate * tax_exchange_rate
+        else:
+            self.__tax += (price - discount) / item_exchange_rate * tax_exchange_rate
 
     def __str__(self):
         customer = self.get_customer()

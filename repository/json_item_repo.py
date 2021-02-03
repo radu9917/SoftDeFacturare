@@ -35,7 +35,8 @@ class JsonItemRepo(ItemRepo):
             currency_dict = {
                 "symbol": currency.get_symbol(),
                 "name": currency.get_name(),
-                "code": currency.get_code()
+                "code": currency.get_code(),
+                "exchange_rate": currency.get_exchange_rate()
             }
             item_dict = {
                 "id": item_id,
@@ -67,6 +68,8 @@ class JsonItemRepo(ItemRepo):
                 name = item["currency"]["name"]
                 code = item["currency"]["code"]
                 currency = Currency(symbol, name, code)
+                exchange_rate = item["currency"]["exchange_rate"]
+                currency.set_exchange_rate(exchange_rate)
                 item_to_store = Item()
                 item_to_store.set_id(item["id"])
                 item_to_store.set_name(item["name"])
