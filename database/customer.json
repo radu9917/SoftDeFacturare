@@ -1,34 +1,44 @@
 {
-    "current_company_id": 1,
-    "current_individual_id": 2,
+    "current_company_id": 3,
+    "current_individual_id": 4,
     "individual_list": [
         {
             "id": 1,
             "first_name": "Ion",
-            "last_name": "Radu",
-            "cnp": "1991217098456",
-            "phone_number": "0758245170",
-            "email_address": "ion.radu17@yahoo.com"
+            "last_name": "Dan",
+            "cnp": "1991217876567",
+            "phone_number": "0756789987",
+            "email_address": "ion.boss.69@gmail.com"
         },
         {
-            "id": 1,
-            "first_name": "Popescu",
-            "last_name": "Claurentiu",
-            "cnp": "1990101098654",
-            "phone_number": "0756778123",
-            "email_address": "popescu.claurentiu@gmail.com"
+            "id": 3,
+            "first_name": "Ion",
+            "last_name": "Radu",
+            "cnp": "1991217567765",
+            "phone_number": "0756453543",
+            "email_address": "ion.radu17@yahoo.com"
         }
     ],
     "company_list": [
         {
-            "id": 1,
-            "first_name": "Ion",
-            "last_name": "Radu",
-            "phone_number": "0758245170",
-            "email_address": "pleso.prd69@yahoo.com",
-            "company_name": "Pleso Praduitoru",
+            "id": 2,
+            "first_name": "Dobrin",
+            "last_name": "Dan",
+            "phone_number": "0756456654",
+            "email_address": "dan_dobrin@gmail.com",
+            "company_name": "Dobre SRL",
             "fiscal_no": "0000123456789",
-            "registration_number": "RO0123"
+            "registration_number": "RO0546"
+        },
+        {
+            "id": 1,
+            "first_name": "Popescu",
+            "last_name": "Geani",
+            "phone_number": "0756231632",
+            "email_address": "bigboss69@gmail.com",
+            "company_name": "La Geani",
+            "fiscal_no": "0000987654321",
+            "registration_number": "RO01234"
         }
     ]
 }

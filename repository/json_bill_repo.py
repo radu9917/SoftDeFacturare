@@ -69,7 +69,8 @@ class JsonBillRepo(BillRepo):
                 currency_dict = {
                     "symbol": currency.get_symbol(),
                     "name": currency.get_name(),
-                    "code": currency.get_code()
+                    "code": currency.get_code(),
+                    "exchange_rate": currency.get_exchange_rate()
                 }
                 item_dict = {
                     "currency": currency_dict,
@@ -198,19 +199,18 @@ class JsonBillRepo(BillRepo):
                     currency = Currency(symbol, name, code)
                     exchange_rate = item["currency"]["exchange_rate"]
                     currency.set_exchange_rate(exchange_rate)
-                    item_to_add.set_id(item["id"])
                     item_to_add.set_name(item["name"])
                     item_to_add.set_price(item["price"])
                     item_to_add.set_discount(item["discount"])
                     item_to_add.set_description(item["description"])
                     item_to_add.set_percent_discount(item["percent_discount"])
                     item_to_add.set_currency(currency)
-                    item_list.append(item_to_add)
+                    item_list.append((item_to_add,1))
                 bill_to_add.set_id(bill_id)
                 bill_to_add.set_items(item_list)
                 bill_to_add.set_notes(bill["notes"])
                 bill_to_add.set_issue_date(bill["issue_date"])
-                bill_to_add.set_due_date("due_date")
+                bill_to_add.set_due_date(bill["due_date"])
                 bill_to_add.set_tax(bill["tax"])
                 symbol = bill["currency"]["symbol"]
                 name = bill["currency"]["name"]

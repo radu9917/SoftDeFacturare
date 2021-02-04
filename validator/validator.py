@@ -64,8 +64,6 @@ class Validator:
             raise DataError("Invalid discount")
 
     def validate_date(self, date):
-        if not date.replace(".", "").isdecimal():
-            raise DataError("Invalid date")
         date_split = date.split(".")
         if int(date_split[0]) > 31:
             raise DataError("Invalid date day")

@@ -29,10 +29,10 @@ class BillService:
         self.__validator.validate_bill(new_bill)
         if isinstance(new_bill, Invoice):
             self.__validator.find_id(str(old_bill), self.__invoice_repo.get_all())
-            self.__invoice_repo.update(self.__invoice_repo.get(old_bill), new_bill)
+            self.__invoice_repo.update(old_bill, new_bill)
         if isinstance(new_bill, FiscalBill):
             self.__validator.find_id(str(old_bill), self.__fiscal_bill_repo.get_all())
-            self.__fiscal_bill_repo.update(self.__fiscal_bill_repo.get(old_bill), new_bill)
+            self.__fiscal_bill_repo.update(old_bill, new_bill)
 
     def choose_fiscal_bill(self, bill_id):
         self.__validator.find_id(bill_id, self.__fiscal_bill_repo.get_all())

@@ -120,8 +120,8 @@ class Bill:
         index = 1
         for item in self.get_items():
             string += (str(index) + ". ")
-            string += (item.get_name() + " - " + item.get_description() + " - " + str(item.get_quantity()) + "x" +
-                       str(item.get_price()) + item.get_currency().get_symbol())
+            string += (item[0].get_name() + " - " + item[0].get_description() + " - " + str(item[1]) + "x" +
+                       str(item[0].get_price()) + item[0].get_currency().get_symbol())
             string += "\n"
             index += 1
         string += ("Total: " + str(self.get_tax()) + self.get_currency().get_symbol())

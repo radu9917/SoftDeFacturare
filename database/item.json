@@ -1,19 +1,33 @@
 {
-  "current_item_index": 1,
-  "item_list":[
-    {
-      "id": 1,
-      "name": "Apple",
-      "description": "A sweet fruit",
-      "price": 2,
-      "currency": {
-        "symbol": "$",
-        "name": "dollar",
-        "code": "USD",
-        "exchange_rate": 4.2
-    },
-      "discount": 0,
-      "percent_discount": false
-    }
-  ]
+    "current_item_index": 3,
+    "item_list": [
+        {
+            "id": 1,
+            "name": "Apple",
+            "description": "A sweet fruit",
+            "discount": 0,
+            "price": 2,
+            "currency": {
+                "symbol": "$",
+                "name": "dollar",
+                "code": "USD",
+                "exchange_rate": 4.2
+            },
+            "percent_discount": false
+        },
+        {
+            "id": 2,
+            "name": "Bread",
+            "description": "Food",
+            "discount": 0,
+            "price": 1,
+            "currency": {
+                "symbol": "Leu",
+                "name": "Leu",
+                "code": "RON",
+                "exchange_rate": 1
+            },
+            "percent_discount": false
+        }
+    ]
 }

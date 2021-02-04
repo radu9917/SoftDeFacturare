@@ -238,16 +238,17 @@ class Console:
 
     def bill_menu(self):
         print("1.Create bill\n2.Delete bill\n3.Modify bill")
-        print("4.Print bill\n5.Add item to bill")
+        print("4.Print bill\n5.Add item to bill\n6.Create a invoice as a fiscal bill")
         option = input("Choose option:")
         try:
-            self.__validator.option_check(option, 5)
+            self.__validator.option_check(option, 6)
             options = {
                 "1": self.create_bill,
                 "2": self.delete_bill,
                 "3": self.modify_bill,
                 "4": self.print_bill,
-                "5": self.add_items_to_bill
+                "5": self.add_items_to_bill,
+                "6": self.invoice_to_fiscal,
             }
             options[option]()
         except OptionError as exp:
@@ -338,9 +339,14 @@ class Console:
             except Exception as exp:
                 print(exp)
 
+    def invoice_to_fiscal(self):
+        invoice_id = int(input("What invoice do you want to choose?\nGive id: "))
+        self.__service.invoice_to_fiscal(invoice_id)
+
     def run(self):
         while True:
-            print("1.Customer menu\n2.Items menu\n3.Currency menu\n4.Bill menu\n5.Exit\n")
+            print("1.Customer menu\n2.Items menu\n3.Currency menu\n"
+                  "4.Bill menu\n5.Exit\n")
             option = input()
             try:
                 self.__validator.option_check(option, 5)

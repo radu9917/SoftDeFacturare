@@ -1,6 +1,96 @@
 {
-    "current_fiscal_bill_id": 1,
-    "current_invoice_id": 1,
-    "invoice_list": [],
-    "fiscal_bill_list": []
+    "current_fiscal_bill_id": 2,
+    "current_invoice_id": 2,
+    "invoice_list": [
+        {
+            "id": 1,
+            "issuer": {
+                "company_name": "Dobre SRL",
+                "fiscal_no": "0000123456789",
+                "registration_number": "RO0546",
+                "first_name": "Dobrin",
+                "last_name": "Dan",
+                "phone_number": "0756456654",
+                "email_address": "dan_dobrin@gmail.com"
+            },
+            "customer": {
+                "cnp": "1991217876567",
+                "first_name": "Ion",
+                "last_name": "Dan",
+                "phone_number": "0756789987",
+                "email_address": "ion.boss.69@gmail.com"
+            },
+            "issue_date": "12.12.2020",
+            "due_date": "13.01.2021",
+            "item_list": [
+                {
+                    "currency": {
+                        "symbol": "$",
+                        "name": "dollar",
+                        "code": "USD",
+                        "exchange_rate": 4.2
+                    },
+                    "name": "Apple",
+                    "price": 2,
+                    "description": "A sweet fruit",
+                    "discount": 0,
+                    "percent_discount": false
+                }
+            ],
+            "currency": {
+                "symbol": "Leu",
+                "name": "Leu",
+                "code": "RON",
+                "exchange_rate": 1
+            },
+            "notes": "Pay as soon as possible",
+            "tax": 8.4
+        }
+    ],
+    "fiscal_bill_list": [
+        {
+            "id": 1,
+            "issuer": {
+                "company_name": "Dobre SRL",
+                "fiscal_no": "0000123456789",
+                "registration_number": "RO0546",
+                "first_name": "Dobrin",
+                "last_name": "Dan",
+                "phone_number": "0756456654",
+                "email_address": "dan_dobrin@gmail.com"
+            },
+            "customer": {
+                "cnp": "1991217876567",
+                "first_name": "Ion",
+                "last_name": "Dan",
+                "phone_number": "0756789987",
+                "email_address": "ion.boss.69@gmail.com"
+            },
+            "issue_date": "12.12.2020",
+            "due_date": "13.01.2021",
+            "item_list": [
+                {
+                    "currency": {
+                        "symbol": "$",
+                        "name": "dollar",
+                        "code": "USD",
+                        "exchange_rate": 4.2
+                    },
+                    "name": "Apple",
+                    "price": 2,
+                    "description": "A sweet fruit",
+                    "discount": 0,
+                    "percent_discount": false
+                }
+            ],
+            "currency": {
+                "symbol": "Leu",
+                "name": "Leu",
+                "code": "RON",
+                "exchange_rate": 1
+            },
+            "notes": "Pay as soon as possible",
+            "tax": 8.4
+        }
+    ]
 }
