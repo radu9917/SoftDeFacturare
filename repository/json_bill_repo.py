@@ -1,5 +1,6 @@
 from repository.bill_repo import BillRepo
 from domain.company import Company
+from domain.bill_item import BillItem
 from domain.individual import Individual
 from domain.currency import Currency
 from domain.item import Item
@@ -65,7 +66,7 @@ class JsonBillRepo(BillRepo):
             item_dict_list = []
             item_list = bill.get_items()
             for item in item_list:
-                currency = item[0].get_currency()
+                currency = item.get_currency()
                 currency_dict = {
                     "symbol": currency.get_symbol(),
                     "name": currency.get_name(),
@@ -74,11 +75,12 @@ class JsonBillRepo(BillRepo):
                 }
                 item_dict = {
                     "currency": currency_dict,
-                    "name": item[0].get_name(),
-                    "price": item[0].get_price(),
-                    "description": item[0].get_description(),
-                    "discount": item[0].get_discount(),
-                    "percent_discount": item[0].get_percent_discount()
+                    "name": item.get_name(),
+                    "price": item.get_price(),
+                    "description": item.get_description(),
+                    "discount": item.get_discount(),
+                    "percent_discount": item.get_percent_discount(),
+                    "quantity": item.get_quantity()
                 }
                 item_dict_list.append(item_dict)
             currency = bill.get_currency()
@@ -192,7 +194,7 @@ class JsonBillRepo(BillRepo):
                 bill_to_add.set_customer(customer)
                 item_list = []
                 for item in bill["item_list"]:
-                    item_to_add = Item()
+                    item_to_add = BillItem()
                     symbol = item["currency"]["symbol"]
                     name = item["currency"]["name"]
                     code = item["currency"]["code"]
@@ -204,8 +206,9 @@ class JsonBillRepo(BillRepo):
                     item_to_add.set_discount(item["discount"])
                     item_to_add.set_description(item["description"])
                     item_to_add.set_percent_discount(item["percent_discount"])
+                    item_to_add.set_quantity(item["quantity"])
                     item_to_add.set_currency(currency)
-                    item_list.append((item_to_add,1))
+                    item_list.append(item_to_add)
                 bill_to_add.set_id(bill_id)
                 bill_to_add.set_items(item_list)
                 bill_to_add.set_notes(bill["notes"])

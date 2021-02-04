@@ -4,7 +4,7 @@ from domain.currency import Currency
 
 class Item(Entity):
     def __init__(self):
-        super().__init__(None)
+        super().__init__()
         self.__name = None
         self.__description = None
         self.__price = None

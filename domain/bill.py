@@ -90,14 +90,12 @@ class Bill:
     def add_items(self, item_to_add):
         found = False
         item = None
-        for index in self.get_items():
-            if index[0] == item_to_add:
-                item = (item_to_add, index[1] + 1)
+        for item in self.get_items():
+            if item == item_to_add:
+                item.increment_quantity()
                 found = True
-                self.__items.remove(index)
         if not found:
-            item = (item_to_add, 1)
-        self.__items.append(item)
+            self.__items.append(item_to_add)
         discount = item_to_add.get_discount()
         price = item_to_add.get_price()
         tax_exchange_rate = self.__currency.get_exchange_rate()
@@ -120,8 +118,8 @@ class Bill:
         index = 1
         for item in self.get_items():
             string += (str(index) + ". ")
-            string += (item[0].get_name() + " - " + item[0].get_description() + " - " + str(item[1]) + "x" +
-                       str(item[0].get_price()) + item[0].get_currency().get_symbol())
+            string += (item.get_name() + " - " + item.get_description() + " - " + str(item.get_quantity()) + "x" +
+                       str(item.get_price()) + item.get_currency().get_symbol())
             string += "\n"
             index += 1
         string += ("Total: " + str(self.get_tax()) + self.get_currency().get_symbol())

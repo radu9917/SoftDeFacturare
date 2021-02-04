@@ -1,6 +1,6 @@
 class Entity:
-    def __init__(self, index):
-        self.__index = index
+    def __init__(self):
+        self.__index = 1
 
     def get_id(self):
         return self.__index

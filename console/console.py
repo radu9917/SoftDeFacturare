@@ -33,7 +33,11 @@ class Console:
             print(exp)
 
     def create_customer(self):
-        number = int(input("How many customers do you want to create"))
+        try:
+            number = int(input("How many customers do you want to create"))
+        except ValueError as exp:
+            print("Value must be numeric")
+            return
         option = self.choose_customer_type()
         while number != 0:
 
@@ -256,10 +260,13 @@ class Console:
 
     def print_bill(self):
         bill = self.choose_bill_type()
-        if bill == Invoice:
-            print(self.__service.print_invoice(input("Give id: ")))
-        if bill == FiscalBill:
-            print(self.__service.print_fiscal_bill(input("Give id: ")))
+        try:
+            if bill == Invoice:
+                print(self.__service.print_invoice(input("Give id: ")))
+            if bill == FiscalBill:
+                print(self.__service.print_fiscal_bill(input("Give id: ")))
+        except Exception as exp:
+            print(exp)
 
     def choose_bill_type(self):
         correct = False
@@ -328,16 +335,16 @@ class Console:
         bill = None
         bill_type = self.choose_bill_type()
         if bill_type == FiscalBill:
-            bill = self.__service.get_fiscal(input("Give id: "))
+            bill = self.__service.get_fiscal(int(input("Give id: ")))
         if bill_type == Invoice:
-            bill = self.__service.get_invoice(input("Give id: "))
+            bill = self.__service.get_invoice(int(input("Give id: ")))
         number = int(input("How many items do you wish to add?"))
         while number != 0:
-            try:
+           # try:
                 self.__service.add_item_to_bill(self.choose_item(), bill)
                 number -= 1
-            except Exception as exp:
-                print(exp)
+           # except Exception as exp:
+            #    print(exp)
 
     def invoice_to_fiscal(self):
         invoice_id = int(input("What invoice do you want to choose?\nGive id: "))

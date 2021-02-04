@@ -64,7 +64,11 @@ class Validator:
             raise DataError("Invalid discount")
 
     def validate_date(self, date):
+        if not date.replace(".", "").isnumeric():
+            raise DataError("Invalid date")
         date_split = date.split(".")
+        if len(date_split) != 3:
+            raise DataError("Invalid date")
         if int(date_split[0]) > 31:
             raise DataError("Invalid date day")
         if int(date_split[1]) > 12:
@@ -80,7 +84,7 @@ class Validator:
             self.validate_company(customer)
         self.validate_currency(bill.get_currency())
         for item in bill.get_items():
-            self.validate_item(item[0])
+            self.validate_item(item)
         self.validate_company(bill.get_issuer())
         self.validate_date(bill.get_due_date())
         self.validate_date(bill.get_issue_date())
@@ -102,5 +106,5 @@ class Validator:
     def option_check(self, option, set_max):
         if not option.isdecimal():
             raise OptionError("Invalid option")
-        if int(option) > set_max :
+        if int(option) > set_max or int(option) < 1:
             raise OptionError("Option does not exist")

@@ -1,6 +1,4 @@
 {
-    "current_fiscal_bill_id": 1,
-    "current_invoice_id": 1,
-    "invoice_list": [],
-    "fiscal_bill_list": []
+    "current_item_index": 1,
+    "item_list": []
 }

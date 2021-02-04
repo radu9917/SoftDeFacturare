@@ -1,7 +1,7 @@
 from repository.json_bill_repo import JsonBillRepo
 from domain.company import Company
 from domain.individual import Individual
-from domain.item import Item
+from domain.bill_item import BillItem
 from domain.currency import Currency
 from domain.invoice import Invoice
 from domain.fiscal_bill import FiscalBill
@@ -28,7 +28,7 @@ class TestJsonBill(unittest.TestCase):
         individual.set_last_name("Vasile")
         individual.set_phone_number("0745321784")
         individual.set_email_address("petre.vasileboss@yahoo.com")
-        item = Item()
+        item = BillItem()
         currency = Currency("$", "Dollar", "USD")
         item.set_id(1)
         item.set_currency(currency)
@@ -39,7 +39,7 @@ class TestJsonBill(unittest.TestCase):
         invoice = Invoice()
         invoice.set_customer(individual)
         invoice.set_currency(currency)
-        invoice.set_items([(item, 1)])
+        invoice.set_items([item])
         invoice.set_id(1)
         invoice.set_tax(item.get_price())
         invoice.set_issuer(company)

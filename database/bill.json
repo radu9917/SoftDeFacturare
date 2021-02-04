@@ -1,17 +1,17 @@
 {
     "current_fiscal_bill_id": 2,
-    "current_invoice_id": 2,
+    "current_invoice_id": 3,
     "invoice_list": [
         {
-            "id": 1,
+            "id": 2,
             "issuer": {
-                "company_name": "Dobre SRL",
-                "fiscal_no": "0000123456789",
-                "registration_number": "RO0546",
-                "first_name": "Dobrin",
-                "last_name": "Dan",
-                "phone_number": "0756456654",
-                "email_address": "dan_dobrin@gmail.com"
+                "company_name": "La Geani",
+                "fiscal_no": "0000987654321",
+                "registration_number": "RO01234",
+                "first_name": "Popescu",
+                "last_name": "Geani",
+                "phone_number": "0756231632",
+                "email_address": "bigboss69@gmail.com"
             },
             "customer": {
                 "cnp": "1991217876567",
@@ -20,8 +20,8 @@
                 "phone_number": "0756789987",
                 "email_address": "ion.boss.69@gmail.com"
             },
-            "issue_date": "12.12.2020",
-            "due_date": "13.01.2021",
+            "issue_date": "20.12.2020",
+            "due_date": "12.01.2021",
             "item_list": [
                 {
                     "currency": {
@@ -34,17 +34,32 @@
                     "price": 2,
                     "description": "A sweet fruit",
                     "discount": 0,
-                    "percent_discount": false
+                    "percent_discount": false,
+                    "quantity": 2
+                },
+                {
+                    "currency": {
+                        "symbol": "RON",
+                        "name": "Leu",
+                        "code": "RON",
+                        "exchange_rate": 1
+                    },
+                    "name": "Bread",
+                    "price": 1,
+                    "description": "Food",
+                    "discount": 0,
+                    "percent_discount": false,
+                    "quantity": 2
                 }
             ],
             "currency": {
-                "symbol": "Leu",
+                "symbol": "RON",
                 "name": "Leu",
                 "code": "RON",
                 "exchange_rate": 1
             },
-            "notes": "Pay as soon as possible",
-            "tax": 8.4
+            "notes": "da",
+            "tax": 18.8
         }
     ],
     "fiscal_bill_list": [
@@ -80,17 +95,18 @@
                     "price": 2,
                     "description": "A sweet fruit",
                     "discount": 0,
-                    "percent_discount": false
+                    "percent_discount": false,
+                    "quantity": 3
                 }
             ],
             "currency": {
-                "symbol": "Leu",
+                "symbol": "RON",
                 "name": "Leu",
                 "code": "RON",
                 "exchange_rate": 1
             },
             "notes": "Pay as soon as possible",
-            "tax": 8.4
+            "tax": 25.2
         }
     ]
 }

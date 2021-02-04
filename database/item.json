@@ -22,7 +22,7 @@
             "discount": 0,
             "price": 1,
             "currency": {
-                "symbol": "Leu",
+                "symbol": "RON",
                 "name": "Leu",
                 "code": "RON",
                 "exchange_rate": 1

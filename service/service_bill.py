@@ -5,9 +5,9 @@ from validator.validator import Validator
 
 
 class BillService:
-    def __init__(self):
-        self.__invoice_repo = JsonBillRepo("database/bill.json", Invoice)
-        self.__fiscal_bill_repo = JsonBillRepo("database/bill.json", FiscalBill)
+    def __init__(self, invoice_repo, fiscal_bill_repo):
+        self.__invoice_repo = invoice_repo
+        self.__fiscal_bill_repo = fiscal_bill_repo
         self.__validator = Validator.get_instance()
 
     def create_bill(self, bill):

@@ -3,7 +3,7 @@ from domain.entity import Entity
 
 class Currency(Entity):
     def __init__(self, symbol, name, code):
-        super().__init__(None)
+        super().__init__()
         self.__symbol = symbol
         self.__name = name
         self.__code = code
