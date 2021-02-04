@@ -27,3 +27,4 @@ class TestIndividualRepo(unittest.TestCase):
         self.assertEqual(individual_repo.get_all(), [])
         with self.assertRaises(TypeError):
             individual_repo.store(-1)
+# Testare si fara with
