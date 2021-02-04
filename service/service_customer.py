@@ -34,11 +34,11 @@ class CustomerService:
             self.__validator.find_id(str(old_customer), self.__company_repo.get_all())
             self.__company_repo.update(old_customer, new_customer)
 
-    def choose_individual_customer(self, customer_id):
+    def get_individual_customer(self, customer_id):
         self.__validator.find_id(customer_id, self.__individual_repo.get_all())
         return self.__individual_repo.get(customer_id)
 
-    def choose_company_customer(self, customer_id):
+    def get_company_customer(self, customer_id):
         self.__validator.find_id(customer_id, self.__company_repo.get_all())
         return self.__company_repo.get(customer_id)
 
@@ -48,8 +48,3 @@ class CustomerService:
     def view_all_company(self):
         return self.__company_repo.get_all()
 
-    def get_customer(self, customer_id, customer_type):
-        if customer_type == "Individual":
-            return self.__individual_repo.get(customer_id)
-        if customer_type == "Company":
-            return self.__company_repo.get(customer_id)

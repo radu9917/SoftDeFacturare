@@ -13,7 +13,7 @@ class CustomerRepo(IRepo):
 
     def store(self, customer):
         if type(customer) != self._repo_type:
-            raise Exception("Type is not allowed")
+            raise TypeError("Type is not allowed")
         customer.set_id(self._id)
         self._id += 1
         self._list.append(copy.deepcopy(customer))
@@ -36,7 +36,7 @@ class CustomerRepo(IRepo):
 
     def update(self, old_customer, new_customer):
         if not type(new_customer) in self._implemented_objects:
-            raise Exception("Type is not allowed")
+            raise TypeError("Type is not allowed")
 
         for customer in self._list:
             if old_customer == customer.get_id():

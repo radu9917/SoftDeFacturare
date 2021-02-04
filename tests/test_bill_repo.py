@@ -37,3 +37,19 @@ class TestBillRepo(unittest.TestCase):
         self.assertEqual(invoice_repo.get(1), invoice)
         invoice_repo.delete(1)
         self.assertEqual(invoice_repo.get_all(), [])
+        self.assertEqual(invoice_repo.get(69), None)
+        try:
+            repo = BillRepo("asdas")
+            self.assertFalse(True)
+        except Exception as exp:
+            self.assertFalse(False)
+        try:
+            invoice_repo.update(1, 1)
+            self.assertFalse(True)
+        except Exception as exp:
+            self.assertFalse(False)
+            try:
+                invoice_repo.store(1)
+                self.assertFalse(True)
+            except Exception as exp:
+                self.assertFalse(False)

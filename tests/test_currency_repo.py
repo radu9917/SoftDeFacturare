@@ -15,3 +15,4 @@ class TestCurrencyRepo(unittest.TestCase):
         self.assertEqual(currency_repo.get(1), currency2)
         currency_repo.delete(currency2.get_id())
         self.assertEqual(currency_repo.get_all(), [])
+        self.assertIsNone(currency_repo.get(-1))

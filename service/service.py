@@ -33,10 +33,10 @@ class Service:
         self.__customer_service.update_customer(old_customer, new_customer)
 
     def view_individual_customer(self, customer_id):
-        return self.__customer_service.choose_individual_customer(customer_id)
+        return self.__customer_service.get_individual_customer(customer_id)
 
     def view_company_customer(self, customer_id):
-        return self.__customer_service.choose_company_customer(customer_id)
+        return self.__customer_service.get_company_customer(customer_id)
 
     def view_all_individual_customer(self):
         return self.__customer_service.view_all_individual()
@@ -108,16 +108,16 @@ class Service:
         self.__bill_service.update_bill(old_bill, new_bill)
 
     def choose_fiscal_bill(self, bill_id):
-        return self.__bill_service.choose_fiscal_bill(bill_id)
+        return self.__bill_service.get_fiscal(bill_id)
 
     def choose_invoice(self, bill_id):
-        return self.__bill_service.choose_invoice(bill_id)
+        return self.__bill_service.get_invoice(bill_id)
 
     def print_fiscal_bill(self, bill_id):
-        return self.__bill_service.print_fiscal_bill(bill_id)
+        return self.__bill_service.get_fiscal(bill_id)
 
     def print_invoice(self, bill_id):
-        return self.__bill_service.print_invoice(bill_id)
+        return self.__bill_service.get_invoice(bill_id)
 
     def get_fiscal(self, index):
         return self.__bill_service.get_fiscal(int(index))

@@ -128,7 +128,7 @@ class JsonCustomerRepo(CustomerRepo):
                     customer_to_add.set_fiscal_no(fiscal_no)
                     customer_to_add.set_registration_number(registration_number)
                 self._list.append(customer_to_add)
-            file.close()
+        file.close()
 
     def reset_id(self):
         self._id = 1
