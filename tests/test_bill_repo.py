@@ -43,13 +43,9 @@ class TestBillRepo(unittest.TestCase):
             self.assertFalse(True)
         except Exception as exp:
             self.assertFalse(False)
-        try:
+
+        with self.assertRaises(TypeError):
             invoice_repo.update(1, 1)
-            self.assertFalse(True)
-        except Exception as exp:
-            self.assertFalse(False)
-            try:
-                invoice_repo.store(1)
-                self.assertFalse(True)
-            except Exception as exp:
-                self.assertFalse(False)
+
+        with self.assertRaises(TypeError):
+            invoice_repo.store(1)

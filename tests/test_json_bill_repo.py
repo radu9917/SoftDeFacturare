@@ -9,7 +9,7 @@ import unittest
 
 
 class TestJsonBill(unittest.TestCase):
-    def test_json_repo(self):
+    def test_invoice_json_repo(self):
         invoice_repo = JsonBillRepo("json_test.json", Invoice)
         company = Company()
         company.set_company_name("La Geani")
@@ -55,7 +55,7 @@ class TestJsonBill(unittest.TestCase):
         invoice_repo.reset_id()
         invoice_repo.delete(1)
 
-    def test_fiscal_bill_json(self):
+    def test_bill_json(self):
         fiscal_repo = JsonBillRepo("json_test.json", FiscalBill)
         company = Company()
         company.set_company_name("La Geani")
@@ -91,5 +91,27 @@ class TestJsonBill(unittest.TestCase):
         fiscal_repo.update(1, fiscal_bill)
         fiscal_repo2 = JsonBillRepo("json_test.json", FiscalBill)
         self.assertEqual(fiscal_repo.get(1), fiscal_repo2.get(1))
+        invoice_repo = JsonBillRepo("json_test.json", Invoice)
+        invoice = Invoice()
+        invoice.set_customer(company)
+        invoice.set_currency(currency)
+        invoice.set_items([item])
+        invoice.set_id(1)
+        invoice.set_tax(item.get_price())
+        invoice.set_issuer(company)
+        invoice.set_issue_date("24.01.2021")
+        invoice.set_due_date("10.02.2021")
+        invoice.set_notes("Platiti la Banca Transilvania")
+        invoice_repo.store(invoice)
+        self.assertEqual(invoice, invoice_repo.get(1))
+        invoice.add_items(item)
+        invoice_repo.update(1, invoice)
+        invoice_repo2 = JsonBillRepo("json_test.json", Invoice)
+        self.assertEqual(invoice_repo.get(1), invoice_repo2.get(1))
+        fiscal_repo.store(fiscal_bill)
+        fiscal_repo.get(2)
+        fiscal_repo.delete(2)
         fiscal_repo.reset_id()
+        invoice_repo.reset_id()
+        invoice_repo.delete(1)
         fiscal_repo.delete(1)

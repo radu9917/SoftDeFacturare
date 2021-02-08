@@ -16,16 +16,19 @@ class JsonBillRepo(BillRepo):
         self.__load_from_file()
 
     def store(self, obj):
-        super().store(obj)
+        returned_obj = super().store(obj)
         self.__store_to_file()
+        return returned_obj
 
     def delete(self, obj_id):
-        super().delete(obj_id)
+        returned_obj = super().delete(obj_id)
         self.__store_to_file()
+        return returned_obj
 
     def update(self, old_object, new_object):
-        super().update(old_object, new_object)
+        returned_obj = super().update(old_object, new_object)
         self.__store_to_file()
+        return returned_obj
 
     def __store_to_file(self):
         invoice_list = []
@@ -112,8 +115,8 @@ class JsonBillRepo(BillRepo):
         file = open(self.__file_name, "r")
         json_file = json.loads(file.read())
         file.close()
-        current_fiscal_bill_id = None
-        current_invoice_id = None
+        current_fiscal_bill_id = 1
+        current_invoice_id = 1
         if self._repo_type == FiscalBill:
             fiscal_bill_list = bill_list
             current_fiscal_bill_id = self._id
@@ -121,8 +124,6 @@ class JsonBillRepo(BillRepo):
                 invoice_list = json_file["invoice_list"]
             if "current_invoice_id" in json_file:
                 current_invoice_id = json_file["current_invoice_id"]
-            else:
-                current_invoice_id = 1
 
         if self._repo_type == Invoice:
             invoice_list = bill_list
@@ -131,8 +132,7 @@ class JsonBillRepo(BillRepo):
                 fiscal_bill_list = json_file["fiscal_bill_list"]
             if "current_fiscal_bill_id" in json_file:
                 current_fiscal_bill_id = json_file["current_fiscal_bill_id"]
-            else:
-                current_fiscal_bill_id = 1
+
         json_list = {
             "current_fiscal_bill_id": current_fiscal_bill_id,
             "current_invoice_id": current_invoice_id,

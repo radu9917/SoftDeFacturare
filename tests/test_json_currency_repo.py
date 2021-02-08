@@ -13,13 +13,10 @@ class TestJsonCurrency(unittest.TestCase):
         currency_repo2 = JsonCurrencyRepo("json_test.json")
         currency_list1 = currency_repo.get_all()
         currency_list2 = currency_repo2.get_all()
-        for currency in currency_list1:
-            if currency in currency_list2:
-                assert True
-            else:
-                assert False
+        self.assertEqual(currency_list1, currency_list2)
         currency2.set_name("Leu romanesc")
         currency_repo.update(2, currency2)
+        currency2.set_id(2)
         self.assertEqual(currency_repo.get(2), currency2)
         currency_repo2.reset_id()
         currency_repo2.delete(1)

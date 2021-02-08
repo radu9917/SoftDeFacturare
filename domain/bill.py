@@ -89,7 +89,6 @@ class Bill:
 
     def add_items(self, item_to_add):
         found = False
-        item = None
         for item in self.get_items():
             if item == item_to_add:
                 item.increment_quantity()
@@ -107,22 +106,38 @@ class Bill:
 
     def __str__(self):
         customer = self.get_customer()
-        string = ("To: " + customer.get_first_name() + " " + customer.get_last_name())
-        string += (" " + customer.get_email_address() + " ")
-        string += "\n"
-        string += ("Issued by:" + self.get_issuer().get_company_name() + " " + self.get_issuer().get_email_address())
-        string += "\n"
-        string += ("Date:" + self.get_issue_date() + "\n")
-        string += ("Due Date:" + self.get_due_date() + "\n")
-        string += "Items:\n"
+        bill_base = ("\nTo: {first_name}  {last_name} - {customer_email_address}\n"
+                  "Issued by: {company_name} - {issuer_email_address}\n"
+                  "Date: {issue_date}\n"
+                  "Due Date: {due_date}\n"
+                  "Items:\n{items}"
+                  "Total: {total}{currency_symbol}\nNotes: {notes}\n")
         index = 1
+
+        items = ""
         for item in self.get_items():
-            string += (str(index) + ". ")
-            string += (item.get_name() + " - " + item.get_description() + " - " + str(item.get_quantity()) + "x" +
-                       str(item.get_price()) + item.get_currency().get_symbol())
-            string += "\n"
+            items += item_base.format(
+                        index=index,
+                        item_name=item.get_name(),
+                        item_description=item.get_description(),
+                        quantity=item.get_quantity(),
+                        price=item.get_price(),
+                        currency_symbol=item.get_currency().get_symbol()
+                    )
+
             index += 1
-        string += ("Total: " + str(self.get_tax()) + self.get_currency().get_symbol())
-        string += "\n"
-        string += ("Notes:" + self.get_notes())
-        return string
+        formated_bill = bill_base.format(
+            first_name=customer.get_first_name(),
+            last_name=customer.get_last_name(),
+            customer_email_address=customer.get_email_address(),
+            company_name=self.__issuer.get_company_name(),
+            issuer_email_address=self.__issuer.get_email_address(),
+            issue_date=self.__issue_date,
+            due_date=self.__due_date,
+            items=items,
+            total=self.__tax,
+            currency_symbol=self.__currency.get_symbol(),
+            notes=self.__notes
+        )
+
+        return formated_bill

@@ -12,12 +12,13 @@ class BillRepo(IRepo):
         self._id = 1
 
     def store(self, bill):
-        if not type(bill) in self._implemented_objects:
-            raise Exception("Type is not allowed")
-        bill.set_id(self._id)
+        bill_copy = copy.deepcopy(bill)
+        if not type(bill_copy) in self._implemented_objects:
+            raise TypeError("Type is not allowed")
+        bill_copy.set_id(self._id)
         self._id += 1
-        self._list.append(copy.deepcopy(bill))
-        return bill
+        self._list.append(bill_copy)
+        return bill_copy
 
     def get_all(self):
         return copy.deepcopy(self._list)
@@ -25,7 +26,7 @@ class BillRepo(IRepo):
     def get(self, bill_id):
         for bill in self.get_all():
             if bill.get_id() == bill_id:
-                return copy.deepcopy(bill)
+                return bill
         return None
 
     def delete(self, bill_id):
@@ -36,7 +37,7 @@ class BillRepo(IRepo):
 
     def update(self, old_obj, new_obj):
         if not type(new_obj) in self._implemented_objects:
-            raise Exception("Type is not allowed")
+            raise TypeError("Type is not allowed")
         for bill in self._list:
             if old_obj == bill.get_id():
                 old_bill = bill

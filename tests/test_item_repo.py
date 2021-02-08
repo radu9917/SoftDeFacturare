@@ -27,3 +27,4 @@ class TestItemRepo(unittest.TestCase):
         self.assertEqual(item_repo.get(1), item2)
         item_repo.delete(item2.get_id())
         self.assertEqual(item_repo.get_all(), [])
+        self.assertIsNone(item_repo.get(-1))

@@ -36,4 +36,4 @@ class ItemRepo(IRepo):
                 self.delete(old_item)
                 self.store(new_item)
                 self._id = old
-                return old_item
+                return item

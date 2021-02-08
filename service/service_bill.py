@@ -1,6 +1,5 @@
 from domain.invoice import Invoice
 from domain.fiscal_bill import FiscalBill
-from repository.json_bill_repo import JsonBillRepo
 from validator.validator import Validator
 
 
@@ -56,3 +55,35 @@ class BillService:
                 fiscal_bill.set_notes(bill.get_notes())
                 self.__fiscal_bill_repo.store(fiscal_bill)
                 return fiscal_bill
+
+    def render_bill(self, bill, template):
+        with open(template, "r") as file:
+            bill_base = file.read()
+
+        item_list = ""
+        index = 1
+        item_base = "\t{index}.{item_name}-{item_description}-{quantity}x{price}{currency_symbol}\n"
+        items = bill.get_items()
+        for item in bill.get_items():
+            item_list += item_base.format(
+                index=index,
+                item_name=item.get_name(),
+                item_description=item.get_description(),
+                quantity=item.get_quantity(),
+                price=item.get_price(),
+                currency_symbol=item.get_currency().get_symbol()
+            )
+
+            index += 1
+
+        formated_bill = bill_base.format(
+                id=bill.get_id(),
+                customer=str(bill.get_customer()),
+                issuer=str(bill.get_issuer()),
+                issue_date=bill.get_issue_date(),
+                due_date=bill.get_due_date(),
+                bill_items=item_list,
+                bill_total=bill.get_tax(),
+                notes=bill.get_notes()
+        )
+        return formated_bill

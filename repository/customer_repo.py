@@ -45,4 +45,4 @@ class CustomerRepo(IRepo):
                 self.delete(old_customer)
                 self.store(new_customer)
                 self._id = old
-                return old_customer
+                return customer

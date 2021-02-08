@@ -13,17 +13,12 @@ class Individual(Customer):
         self.__cnp = cnp
 
     def __eq__(self, other):
-        if self.get_last_name() != other.get_last_name():
-            return False
-        if self.get_first_name() != other.get_first_name():
-            return False
-        if self.get_phone_number() != other.get_phone_number():
-            return False
-        if self.get_email_address() != other.get_email_address():
-            return False
+        super().__eq__(other)
         if self.get_cnp() != other.get_cnp():
             return False
         return True
 
     def __str__(self):
-        return "Individual " + self.get_first_name() + " " + self.get_last_name()
+        individual_base = "Individual {first_name} {last_name}"
+        formated_individual = individual_base.format(first_name=self.get_first_name(),last_name=self.get_last_name())
+        return formated_individual

@@ -6,7 +6,6 @@ class Invoice(Bill):
         super().__init__()
 
     def __str__(self):
-
-        string = ("Invoice #" + str(self.get_id()) + "\n")
-        string += super().__str__()
-        return string
+        invoice_base = ("Invoice # {id}\n{bill}")
+        formated_invoice = invoice_base.format(id=self.get_id(), bill=super().__str__())
+        return formated_invoice

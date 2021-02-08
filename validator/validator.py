@@ -94,7 +94,7 @@ class Validator:
     # ID CHECK
     def find_id(self, index, obj_list):
         found = False
-        if not str(index).isdecimal():
+        if not str(index).isnumeric():
             raise IdError("Invalid Id")
         for ob in obj_list:
             if ob.get_id() == int(index):

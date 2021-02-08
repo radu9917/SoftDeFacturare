@@ -49,4 +49,6 @@ class Currency(Entity):
         return True
 
     def __str__(self):
-        return str(self.get_id()) + ". " + self.__code
+        currency_base = "{id}.{code}"
+        formated_currency = currency_base.format(id=self.get_id(),code=self.__code)
+        return formated_currency

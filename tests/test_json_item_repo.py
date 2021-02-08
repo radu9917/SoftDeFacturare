@@ -24,11 +24,7 @@ class TestItemJson(unittest.TestCase):
         item_repo2 = JsonItemRepo("json_test.json")
         item_list2 = item_repo2.get_all()
         item_list = item_repo.get_all()
-        for item in item_list:
-            if item in item_list2:
-                assert True
-            else:
-                assert False
+        self.assertEqual(item_list, item_list2)
         item2.set_name("Green Apple")
         item_repo2.update(2, item2)
         self.assertEqual(item_repo2.get(2), item2)

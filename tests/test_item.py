@@ -1,7 +1,7 @@
 import unittest
 from domain.item import Item
 from domain.currency import Currency
-
+import copy
 
 class TestItemDomain(unittest.TestCase):
     def test_item_getters_and_setters(self):
@@ -17,3 +17,37 @@ class TestItemDomain(unittest.TestCase):
         self.assertEqual(item.get_discount(), 0)
         self.assertEqual(item.get_currency(), currency)
         self.assertEqual(item.get_description(), "A round fruit")
+
+    def test_equal(self):
+        item = Item()
+        currency = Currency("$", "Dollar", "USD")
+        currency2 = copy.deepcopy(currency)
+        currency2.set_name("dollar")
+        item.set_name("Apple")
+        item.set_price(1)
+        item.set_discount(0)
+        item.set_currency(currency)
+        item.set_description("A round fruit")
+        item.set_id(1)
+        item.set_percent_discount(False)
+        item2 = copy.deepcopy(item)
+        item2.set_id(2)
+        self.assertNotEqual(item, item2)
+        item2.set_id(item.get_id())
+        item2.set_name("pear")
+        self.assertNotEqual(item, item2)
+        item2.set_name(item.get_name())
+        item2.set_currency(currency2)
+        self.assertNotEqual(item, item2)
+        item2.set_currency(item.get_currency())
+        item2.set_description("asdf")
+        self.assertNotEqual(item, item2)
+        item2.set_description(item.get_description())
+        item2.set_price(0)
+        self.assertNotEqual(item, item2)
+        item2.set_price(item.get_price())
+        item2.set_discount(1)
+        self.assertNotEqual(item, item2)
+        item2.set_discount(item.get_discount())
+        item2.set_percent_discount(True)
+        self.assertNotEqual(item, item2)

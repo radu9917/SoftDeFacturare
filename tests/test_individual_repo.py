@@ -25,6 +25,8 @@ class TestIndividualRepo(unittest.TestCase):
         self.assertEqual(individual2, individual_repo.get(1))
         individual_repo.delete(individual2.get_id())
         self.assertEqual(individual_repo.get_all(), [])
+        self.assertIsNone(individual_repo.get(-1))
         with self.assertRaises(TypeError):
             individual_repo.store(-1)
-# Testare si fara with
+        with self.assertRaises(TypeError):
+            individual_repo.update(1, 1)

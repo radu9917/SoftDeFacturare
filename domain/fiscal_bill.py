@@ -6,7 +6,6 @@ class FiscalBill(Bill):
         super().__init__()
 
     def __str__(self):
-
-        string = ("Fiscal Bill #" + str(self.get_id()) + "\n")
-        string += super().__str__()
-        return string
+        fiscal_bill_base = ("Fiscal Bill # {id}\n{bill}")
+        formated_fiscal_bill = fiscal_bill_base.format(id=self.get_id(), bill=super().__str__())
+        return formated_fiscal_bill

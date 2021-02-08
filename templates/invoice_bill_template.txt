@@ -1,0 +1,10 @@
+Invoice: {id}
+To: {customer}
+By: {issuer}
+Date: {issue_date}
+Due Date: {due_date}
+Items:
+{bill_items}
+
+Total: {bill_total}
+Notes: {notes}

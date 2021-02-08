@@ -73,4 +73,12 @@ class Item(Entity):
         return True
 
     def __str__(self):
-        return str(self.get_id()) + ". " + self.__name + "-" + str(self.__price) + self.__currency.get_symbol()
+        item_base = "{id}. {name}-{description}-{price}{symbol}"
+        formated_item = item_base.format(
+            id=self.get_id(),
+            name=self.get_name(),
+            description=self.get_description(),
+            price=self.get_price(),
+            symbol=self.get_currency().get_symbol()
+        )
+        return formated_item

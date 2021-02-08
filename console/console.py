@@ -1,5 +1,4 @@
 from service.service import Service
-from repository.currency_repo import CurrencyRepo
 from domain.individual import Individual
 from domain.company import Company
 from domain.currency import Currency
@@ -11,8 +10,8 @@ from validator.exceptions import OptionError
 
 
 class Console:
-    def __init__(self):
-        self.__service = Service()
+    def __init__(self,currency_file, item_file, customer_file, bill_file):
+        self.__service = Service(currency_file, item_file, customer_file, bill_file)
         self.__validator = Validator.get_instance()
 
     # Customer options
@@ -242,10 +241,11 @@ class Console:
 
     def bill_menu(self):
         print("1.Create bill\n2.Delete bill\n3.Modify bill")
-        print("4.Print bill\n5.Add item to bill\n6.Create a invoice as a fiscal bill")
+        print("4.Print bill\n5.Add item to bill\n6.Create a invoice as a fiscal bill\n"
+              "7.Render Bill")
         option = input("Choose option:")
         try:
-            self.__validator.option_check(option, 6)
+            self.__validator.option_check(option, 7)
             options = {
                 "1": self.create_bill,
                 "2": self.delete_bill,
@@ -253,6 +253,7 @@ class Console:
                 "4": self.print_bill,
                 "5": self.add_items_to_bill,
                 "6": self.invoice_to_fiscal,
+                "7": self.render_bill
             }
             options[option]()
         except OptionError as exp:
@@ -262,9 +263,9 @@ class Console:
         bill = self.choose_bill_type()
         try:
             if bill == Invoice:
-                print(self.__service.print_invoice(input("Give id: ")))
+                print(self.__service.get_invoice(input("Give id: ")))
             if bill == FiscalBill:
-                print(self.__service.print_fiscal_bill(input("Give id: ")))
+                print(self.__service.get_fiscal(input("Give id: ")))
         except Exception as exp:
             print(exp)
 
@@ -349,6 +350,19 @@ class Console:
     def invoice_to_fiscal(self):
         invoice_id = int(input("What invoice do you want to choose?\nGive id: "))
         self.__service.invoice_to_fiscal(invoice_id)
+
+    def render_bill(self):
+        bill_type = self.choose_bill_type()
+        bill = None
+        if bill_type == FiscalBill:
+            bill = self.__service.get_fiscal(int(input("Give id: ")))
+        if bill_type == Invoice:
+            bill = self.__service.get_invoice(int(input("Give id: ")))
+        template = self.choose_template()
+        print(self.__service.export_bill_as_txt(bill, template))
+
+    def choose_template(self):
+        return "templates/invoice_bill_template.txt"
 
     def run(self):
         while True:

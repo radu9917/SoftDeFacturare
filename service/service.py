@@ -12,14 +12,15 @@ from validator.validator import Validator
 from domain.bill_item import BillItem
 from service.service_currency import CurrencyService
 from repository.json_item_repo import JsonItemRepo
+import copy
 
 
 class Service:
-    def __init__(self):
-        self.__currency_service = CurrencyService(JsonCurrencyRepo("database/currency.json"))
-        self.__item_service = ItemService(JsonItemRepo("database/item.json"))
-        self.__customer_service = CustomerService(JsonCustomerRepo("database/customer.json", Individual), JsonCustomerRepo("database/customer.json", Company))
-        self.__bill_service = BillService(JsonBillRepo("database/bill.json", Invoice), JsonBillRepo("database/bill.json", FiscalBill))
+    def __init__(self, currency_file, item_file, customer_file, bill_file):
+        self.__currency_service = CurrencyService(JsonCurrencyRepo(currency_file))
+        self.__item_service = ItemService(JsonItemRepo(item_file))
+        self.__customer_service = CustomerService(JsonCustomerRepo(customer_file, Individual), JsonCustomerRepo(customer_file, Company))
+        self.__bill_service = BillService(JsonBillRepo(bill_file, Invoice), JsonBillRepo(bill_file, FiscalBill))
         self.__validator = Validator.get_instance()
 
     # Customer options
@@ -32,12 +33,6 @@ class Service:
     def modify_customer(self, old_customer, new_customer):
         self.__customer_service.update_customer(old_customer, new_customer)
 
-    def view_individual_customer(self, customer_id):
-        return self.__customer_service.get_individual_customer(customer_id)
-
-    def view_company_customer(self, customer_id):
-        return self.__customer_service.get_company_customer(customer_id)
-
     def view_all_individual_customer(self):
         return self.__customer_service.view_all_individual()
 
@@ -45,10 +40,10 @@ class Service:
         return self.__customer_service.view_all_company()
 
     def get_individual_customer(self, customer_id):
-        return self.__customer_service.get_customer(customer_id, "Individual")
+        return self.__customer_service.get_individual_customer(customer_id)
 
     def get_company_customer(self, customer_id):
-        return self.__customer_service.get_customer(customer_id, "Company")
+        return self.__customer_service.get_company_customer(customer_id)
 
     # Item Options
     def create_item(self, item):
@@ -68,13 +63,6 @@ class Service:
 
     def choose_item(self, item_id):
         return self.__item_service.choose_item(item_id)
-
-    def add_item_to_bill(self, item_id, bill):
-        item = self.choose_item(int(item_id))
-        bill_item = BillItem()
-        bill_item.import_from_item(item)
-        bill.add_items(bill_item)
-        self.__bill_service.update_bill(bill.get_id(), bill)
 
     # Currency Options
     def create_currency(self, currency):
@@ -107,20 +95,19 @@ class Service:
         self.__validator.validate_bill(new_bill)
         self.__bill_service.update_bill(old_bill, new_bill)
 
-    def choose_fiscal_bill(self, bill_id):
-        return self.__bill_service.get_fiscal(bill_id)
+    def get_fiscal(self, bill_id):
+        return self.__bill_service.get_fiscal(int(bill_id))
 
-    def choose_invoice(self, bill_id):
-        return self.__bill_service.get_invoice(bill_id)
+    def get_invoice(self, bill_id):
+        return self.__bill_service.get_invoice(int(bill_id))
 
-    def print_fiscal_bill(self, bill_id):
-        return self.__bill_service.get_fiscal(bill_id)
+    def add_item_to_bill(self, item_id, bill):
+        bill_copy = copy.deepcopy(bill)
+        item = self.choose_item(int(item_id))
+        bill_item = BillItem()
+        bill_item.import_from_item(item)
+        bill_copy.add_items(bill_item)
+        self.__bill_service.update_bill(bill_copy.get_id(), bill_copy)
 
-    def print_invoice(self, bill_id):
-        return self.__bill_service.get_invoice(bill_id)
-
-    def get_fiscal(self, index):
-        return self.__bill_service.get_fiscal(int(index))
-
-    def get_invoice(self, index):
-        return self.__bill_service.get_invoice(int(index))
+    def export_bill_as_txt(self, bill, template):
+        return self.__bill_service.render_bill(bill, template)
