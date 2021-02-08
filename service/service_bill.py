@@ -62,9 +62,10 @@ class BillService:
 
         item_list = ""
         index = 1
-        item_base = "\t{index}.{item_name}-{item_description}-{quantity}x{price}{currency_symbol}\n"
+        with open("templates/html_item_template.html", "r") as file:
+            item_base = file.read()
         items = bill.get_items()
-        for item in bill.get_items():
+        for item in items:
             item_list += item_base.format(
                 index=index,
                 item_name=item.get_name(),

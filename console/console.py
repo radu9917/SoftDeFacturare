@@ -355,14 +355,17 @@ class Console:
         bill_type = self.choose_bill_type()
         bill = None
         if bill_type == FiscalBill:
+            bill_name = "fiscal_bill_"
             bill = self.__service.get_fiscal(int(input("Give id: ")))
         if bill_type == Invoice:
+            bill_name = "invoice_"
             bill = self.__service.get_invoice(int(input("Give id: ")))
         template = self.choose_template()
-        print(self.__service.export_bill_as_txt(bill, template))
+        with open("bills/"+bill_name+str(bill.get_id())+".html", "w") as file:
+            file.write(self.__service.export_bill_as_txt(bill, template))
 
     def choose_template(self):
-        return "templates/invoice_bill_template.txt"
+        return "templates/invoice.html"
 
     def run(self):
         while True:

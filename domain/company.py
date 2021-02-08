@@ -29,7 +29,7 @@ class Company(Customer):
         self.__fiscal_code = fiscal_number
 
     def __str__(self):
-        company_base = "{company_name}-{first_name} {last_name} "
+        company_base = "{company_name}-{first_name} {last_name}"
         formated_company = company_base.format(
             first_name=self.get_first_name(),
             last_name=self.get_last_name(),
