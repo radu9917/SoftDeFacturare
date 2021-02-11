@@ -98,7 +98,7 @@ class JsonBillRepo(BillRepo):
                 "exchange_rate": exchange_rate
             }
             notes = bill.get_notes()
-            tax = bill.get_tax()
+            total = bill.get_total()
             bill_id = bill.get_id()
             bill_dict = {
                 "id": bill_id,
@@ -109,7 +109,7 @@ class JsonBillRepo(BillRepo):
                 "item_list": item_dict_list,
                 "currency": currency_dict,
                 "notes": notes,
-                "tax": tax
+                "total": total
             }
             bill_list.append(bill_dict)
         file = open(self.__file_name, "r")
@@ -214,7 +214,7 @@ class JsonBillRepo(BillRepo):
                 bill_to_add.set_notes(bill["notes"])
                 bill_to_add.set_issue_date(bill["issue_date"])
                 bill_to_add.set_due_date(bill["due_date"])
-                bill_to_add.set_tax(bill["tax"])
+                bill_to_add.set_total(bill["total"])
                 symbol = bill["currency"]["symbol"]
                 name = bill["currency"]["name"]
                 code = bill["currency"]["code"]

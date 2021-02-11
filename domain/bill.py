@@ -7,7 +7,7 @@ class Bill:
         self.__items = []
         self.__currency = None
         self.__notes = None
-        self.__tax = 0.0
+        self.__total = 0.0
         self.__bill_id = None
 
     # GETTERS
@@ -35,8 +35,8 @@ class Bill:
     def get_notes(self):
         return self.__notes
 
-    def get_tax(self):
-        return self.__tax
+    def get_total(self):
+        return self.__total
 
     # SETTERS
     def set_id(self, bill_id):
@@ -63,15 +63,15 @@ class Bill:
     def set_notes(self, notes):
         self.__notes = notes
 
-    def set_tax(self, tax):
-        self.__tax = tax
+    def set_total(self, total):
+        self.__total = total
 
     def __eq__(self, other):
         if self.get_id() != other.get_id():
             return False
         if self.get_currency() != other.get_currency():
             return False
-        if self.get_tax() != other.get_tax():
+        if self.get_total() != other.get_total():
             return False
         if self.get_items() != other.get_items():
             return False
@@ -100,9 +100,9 @@ class Bill:
         tax_exchange_rate = self.__currency.get_exchange_rate()
         item_exchange_rate = item_to_add.get_currency().get_exchange_rate()
         if item_to_add.get_percent_discount():
-            self.__tax += (price - price * discount / 100) * item_exchange_rate / tax_exchange_rate
+            self.__total += (price - price * discount / 100) * item_exchange_rate / tax_exchange_rate
         else:
-            self.__tax += (price - discount) * item_exchange_rate / tax_exchange_rate
+            self.__total += (price - discount) * item_exchange_rate / tax_exchange_rate
 
     def __str__(self):
         customer = self.get_customer()
@@ -135,7 +135,7 @@ class Bill:
             issue_date=self.__issue_date,
             due_date=self.__due_date,
             items=items,
-            total=self.__tax,
+            total=self.__total,
             currency_symbol=self.__currency.get_symbol(),
             notes=self.__notes
         )

@@ -341,11 +341,11 @@ class Console:
             bill = self.__service.get_invoice(int(input("Give id: ")))
         number = int(input("How many items do you wish to add?"))
         while number != 0:
-           # try:
+            try:
                 self.__service.add_item_to_bill(self.choose_item(), bill)
                 number -= 1
-           # except Exception as exp:
-            #    print(exp)
+            except Exception as exp:
+                print(exp)
 
     def invoice_to_fiscal(self):
         invoice_id = int(input("What invoice do you want to choose?\nGive id: "))

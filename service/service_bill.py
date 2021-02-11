@@ -47,7 +47,7 @@ class BillService:
             if bill.get_id() == bill_id:
                 fiscal_bill.set_issuer(bill.get_issuer())
                 fiscal_bill.set_currency(bill.get_currency())
-                fiscal_bill.set_tax(bill.get_tax())
+                fiscal_bill.set_total(bill.get_total())
                 fiscal_bill.set_items(bill.get_items())
                 fiscal_bill.set_customer(bill.get_customer())
                 fiscal_bill.set_due_date(bill.get_due_date())
@@ -84,7 +84,7 @@ class BillService:
                 issue_date=bill.get_issue_date(),
                 due_date=bill.get_due_date(),
                 bill_items=item_list,
-                bill_total=bill.get_tax(),
+                bill_total=bill.get_total(),
                 notes=bill.get_notes()
         )
         return formated_bill

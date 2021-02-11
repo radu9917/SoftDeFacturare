@@ -59,7 +59,7 @@
                 "exchange_rate": 1
             },
             "notes": "da",
-            "tax": 18.8
+            "total": 18.8
         }
     ],
     "fiscal_bill_list": [
@@ -106,7 +106,7 @@
                 "exchange_rate": 1
             },
             "notes": "Pay as soon as possible",
-            "tax": 25.2
+            "total": 25.2
         }
     ]
 }
