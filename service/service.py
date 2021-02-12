@@ -13,6 +13,8 @@ from domain.bill_item import BillItem
 from service.service_currency import CurrencyService
 from repository.json_item_repo import JsonItemRepo
 import copy
+import pdfkit
+
 
 
 class Service:
@@ -111,3 +113,9 @@ class Service:
 
     def export_bill_as_txt(self, bill, template):
         return self.__bill_service.render_bill(bill, template)
+
+    def render_bill(self, bill_name, bill, template):
+        with open("bills/html/"+bill_name+str(bill.get_id())+".html", "w") as file:
+            file.write(self.export_bill_as_txt(bill, template))
+        pdfkit.from_file("bills/html/"+bill_name+str(bill.get_id())+".html",
+                         "bills/pdf/"+bill_name+str(bill.get_id())+".pdf")

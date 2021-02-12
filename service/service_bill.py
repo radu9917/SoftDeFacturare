@@ -1,6 +1,7 @@
 from domain.invoice import Invoice
 from domain.fiscal_bill import FiscalBill
 from validator.validator import Validator
+from config.config import Config
 
 
 class BillService:
@@ -57,12 +58,13 @@ class BillService:
                 return fiscal_bill
 
     def render_bill(self, bill, template):
+        print(template)
         with open(template, "r") as file:
             bill_base = file.read()
-
+        config = Config.get_instance()
         item_list = ""
         index = 1
-        with open("templates/item_template.txt", "r") as file:
+        with open(config.get_bill_item_template(), "r") as file:
             item_base = file.read()
         items = bill.get_items()
         for item in items:

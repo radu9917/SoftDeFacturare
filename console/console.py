@@ -8,10 +8,12 @@ from domain.invoice import Invoice
 from validator.validator import Validator
 from validator.exceptions import OptionError
 from domain.address import Address
+from config.config import Config
+import os
 
 
 class Console:
-    def __init__(self,currency_file, item_file, customer_file, bill_file):
+    def __init__(self, currency_file, item_file, customer_file, bill_file):
         self.__service = Service(currency_file, item_file, customer_file, bill_file)
         self.__validator = Validator.get_instance()
 
@@ -375,6 +377,7 @@ class Console:
     def render_bill(self):
         bill_type = self.choose_bill_type()
         bill = None
+        bill_name = None
         if bill_type == FiscalBill:
             bill_name = "fiscal_bill_"
             bill = self.__service.get_fiscal(int(input("Give id: ")))
@@ -382,11 +385,20 @@ class Console:
             bill_name = "invoice_"
             bill = self.__service.get_invoice(int(input("Give id: ")))
         template = self.choose_template()
-        with open("bills/"+bill_name+str(bill.get_id())+".html", "w") as file:
-            file.write(self.__service.export_bill_as_txt(bill, template))
+        self.__service.render_bill(bill_name, bill, template)
+
+    def choose_file(self):
+        files = []
+        config = Config.get_instance()
+        for file in os.listdir(config.get_template_folder()):
+            if os.path.isfile(config.get_template_folder() + file):
+                files.append(file)
+        print(files)
 
     def choose_template(self):
-        return "templates/invoice_bill_template.txt"
+        template = Config.get_instance().get_bill_template()
+        return template
+       # return "templates/simple_bill.html"
 
     def run(self):
         while True:
