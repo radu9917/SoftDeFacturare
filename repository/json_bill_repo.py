@@ -3,7 +3,7 @@ from domain.company import Company
 from domain.bill_item import BillItem
 from domain.individual import Individual
 from domain.currency import Currency
-from domain.item import Item
+from builder.bill_builder import BillBuilder
 from domain.fiscal_bill import FiscalBill
 from domain.invoice import Invoice
 import json
@@ -36,6 +36,13 @@ class JsonBillRepo(BillRepo):
         bill_list = []
         for bill in self._list:
             company = bill.get_issuer()
+            address = company.get_address()
+            issuer_address = {
+                "address": address.get_address(),
+                "county": address.get_county(),
+                "country": address.get_country(),
+                "postal_code": address.get_postal_code()
+            }
             issuer = {
                 "company_name": company.get_company_name(),
                 "fiscal_no": company.get_fiscal_no(),
@@ -43,16 +50,26 @@ class JsonBillRepo(BillRepo):
                 "first_name": company.get_first_name(),
                 "last_name": company.get_last_name(),
                 "phone_number": company.get_phone_number(),
-                "email_address": company.get_email_address()
+                "email_address": company.get_email_address(),
+                "address": issuer_address
             }
+
             customer = bill.get_customer()
+            address = customer.get_address()
+            customer_address = {
+                "address": address.get_address(),
+                "county": address.get_county(),
+                "country": address.get_country(),
+                "postal_code": address.get_postal_code()
+            }
             if isinstance(customer, Individual):
                 customer_dict = {
                     "cnp": customer.get_cnp(),
                     "first_name": customer.get_first_name(),
                     "last_name": customer.get_last_name(),
                     "phone_number": customer.get_phone_number(),
-                    "email_address": customer.get_email_address()
+                    "email_address": customer.get_email_address(),
+                    "address": customer_address
                 }
             if isinstance(customer, Company):
                 customer_dict = {
@@ -62,7 +79,8 @@ class JsonBillRepo(BillRepo):
                     "first_name": customer.get_first_name(),
                     "last_name": customer.get_last_name(),
                     "phone_number": customer.get_phone_number(),
-                    "email_address": customer.get_email_address()
+                    "email_address": customer.get_email_address(),
+                    "address": customer_address
                 }
             issue_date = bill.get_issue_date()
             due_date = bill.get_due_date()
@@ -98,7 +116,7 @@ class JsonBillRepo(BillRepo):
                 "exchange_rate": exchange_rate
             }
             notes = bill.get_notes()
-            tax = bill.get_tax()
+            tax = bill.get_total()
             bill_id = bill.get_id()
             bill_dict = {
                 "id": bill_id,
@@ -146,7 +164,7 @@ class JsonBillRepo(BillRepo):
 
     def __load_from_file(self):
         list_type = None
-        bill_to_add = None
+        builder = BillBuilder()
         file = open(self.__file_name, "r")
         json_file = json.loads(file.read())
         file.close()
@@ -160,68 +178,38 @@ class JsonBillRepo(BillRepo):
             list_type = "invoice_list"
         if list_type in json_file:
             for bill in json_file[list_type]:
-                bill_id = bill["id"]
-                if self._repo_type == FiscalBill:
-                    bill_to_add = FiscalBill()
-                if self._repo_type == Invoice:
-                    bill_to_add = Invoice()
-                issuer = Company()
-                issuer.set_company_name(bill["issuer"]["company_name"])
-                issuer.set_fiscal_no(bill["issuer"]["fiscal_no"])
-                issuer.set_registration_number(bill["issuer"]["registration_number"])
-                issuer.set_first_name(bill["issuer"]["first_name"])
-                issuer.set_last_name(bill["issuer"]["last_name"])
-                issuer.set_phone_number(bill["issuer"]["phone_number"])
-                issuer.set_email_address(bill["issuer"]["email_address"])
-                bill_to_add.set_issuer(issuer)
-                customer = None
-                if "cnp" in bill["customer"]:
-                    customer = Individual()
-                    customer.set_first_name(bill["customer"]["first_name"])
-                    customer.set_cnp(bill["customer"]["cnp"])
-                    customer.set_last_name(bill["customer"]["last_name"])
-                    customer.set_phone_number(bill["customer"]["phone_number"])
-                    customer.set_email_address(bill["customer"]["email_address"])
-                if "company_name" in bill["customer"]:
-                    customer = Company()
-                    customer.set_company_name(bill["customer"]["company_name"])
-                    customer.set_fiscal_no(bill["customer"]["fiscal_no"])
-                    customer.set_registration_number(bill["customer"]["registration_number"])
-                    customer.set_first_name(bill["customer"]["first_name"])
-                    customer.set_last_name(bill["customer"]["last_name"])
-                    customer.set_phone_number(bill["customer"]["phone_number"])
-                    customer.set_email_address(bill["customer"]["email_address"])
-                bill_to_add.set_customer(customer)
-                item_list = []
+                issuer = bill["issuer"]
+                builder.create_issuer(issuer["company_name"], issuer["last_name"], issuer["first_name"],
+                                      issuer["email_address"], issuer["phone_number"],
+                                      issuer["fiscal_no"], issuer["registration_number"])
+                issuer_address = issuer["address"]
+                builder.create_issuer_address(issuer_address["address"], issuer_address["county"],
+                                              issuer_address["postal_code"], issuer_address["country"])
+                customer = bill["customer"]
+                if "cnp" in customer:
+                    builder.create_individual_customer(customer["cnp"], customer["last_name"],
+                                                       customer["first_name"], customer["email_address"],
+                                                       customer["phone_number"])
+                if "company_name" in customer:
+                    builder.create_company_customer(customer["company_name"], customer["last-name"],
+                                                    customer["first_name"],
+                                                    customer["email_address"], customer["phone_number"],
+                                                    customer["fiscal_no"], customer["registration_number"])
+                customer_address = customer["address"]
+                builder.create_customer_address(customer_address["address"], customer_address["county"],
+                                                customer_address["postal_code"], customer_address["country"])
                 for item in bill["item_list"]:
-                    item_to_add = BillItem()
-                    symbol = item["currency"]["symbol"]
-                    name = item["currency"]["name"]
-                    code = item["currency"]["code"]
-                    currency = Currency(symbol, name, code)
-                    exchange_rate = item["currency"]["exchange_rate"]
-                    currency.set_exchange_rate(exchange_rate)
-                    item_to_add.set_name(item["name"])
-                    item_to_add.set_price(item["price"])
-                    item_to_add.set_discount(item["discount"])
-                    item_to_add.set_description(item["description"])
-                    item_to_add.set_percent_discount(item["percent_discount"])
-                    item_to_add.set_quantity(item["quantity"])
-                    item_to_add.set_currency(currency)
-                    item_list.append(item_to_add)
-                bill_to_add.set_id(bill_id)
-                bill_to_add.set_items(item_list)
-                bill_to_add.set_notes(bill["notes"])
-                bill_to_add.set_issue_date(bill["issue_date"])
-                bill_to_add.set_due_date(bill["due_date"])
-                bill_to_add.set_tax(bill["tax"])
-                symbol = bill["currency"]["symbol"]
-                name = bill["currency"]["name"]
-                code = bill["currency"]["code"]
-                currency = Currency(symbol, name, code)
-                exchange_rate = bill["currency"]["exchange_rate"]
-                currency.set_exchange_rate(exchange_rate)
-                bill_to_add.set_currency(currency)
+                    currency = item["currency"]
+                    builder.add_item_to_list(item["quantity"], item["name"], item["description"], item["price"],
+                                             item["discount"], item["percent_discount"], currency["name"]
+                                             , currency["code"], currency["symbol"], currency["exchange_rate"])
+
+                currency = bill["currency"]
+                builder.create_bill_currency(currency["symbol"], currency["name"],
+                                             currency["code"], currency["exchange_rate"])
+                builder.create_bill(self._repo_type, bill["issue_date"], bill["due_date"],
+                                    bill["notes"], bill["id"], bill["total"])
+                bill_to_add = builder.build()
                 self._list.append(bill_to_add)
 
     def reset_id(self):

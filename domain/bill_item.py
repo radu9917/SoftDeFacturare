@@ -5,12 +5,22 @@ class BillItem(Item):
     def __init__(self):
         super().__init__()
         self.__quantity = 1
+        self.__total = 0
+
+    def get_total(self):
+        return self.__total
 
     def get_quantity(self):
         return self.__quantity
 
     def set_quantity(self, quantity):
         self.__quantity = quantity
+
+    def set_total(self, total):
+        self.__total = total
+
+    def calc_total(self):
+        self.__total = self.__quantity * self.get_price()
 
     def increment_quantity(self):
         self.__quantity += 1

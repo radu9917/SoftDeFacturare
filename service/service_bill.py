@@ -47,7 +47,7 @@ class BillService:
             if bill.get_id() == bill_id:
                 fiscal_bill.set_issuer(bill.get_issuer())
                 fiscal_bill.set_currency(bill.get_currency())
-                fiscal_bill.set_tax(bill.get_tax())
+                fiscal_bill.set_total(bill.get_total())
                 fiscal_bill.set_items(bill.get_items())
                 fiscal_bill.set_customer(bill.get_customer())
                 fiscal_bill.set_due_date(bill.get_due_date())
@@ -62,7 +62,7 @@ class BillService:
 
         item_list = ""
         index = 1
-        with open("templates/html_item_template.html", "r") as file:
+        with open("templates/item_template.txt", "r") as file:
             item_base = file.read()
         items = bill.get_items()
         for item in items:
@@ -72,7 +72,8 @@ class BillService:
                 item_description=item.get_description(),
                 quantity=item.get_quantity(),
                 price=item.get_price(),
-                currency_symbol=item.get_currency().get_symbol()
+                currency_symbol=item.get_currency().get_symbol(),
+                item_total=item.get_total()
             )
 
             index += 1
@@ -80,11 +81,13 @@ class BillService:
         formated_bill = bill_base.format(
                 id=bill.get_id(),
                 customer=str(bill.get_customer()),
+                customer_address=str(bill.get_customer().get_address()),
                 issuer=str(bill.get_issuer()),
+                issuer_address=str(bill.get_issuer().get_address()),
                 issue_date=bill.get_issue_date(),
                 due_date=bill.get_due_date(),
                 bill_items=item_list,
-                bill_total=bill.get_tax(),
+                bill_total=bill.get_total(),
                 notes=bill.get_notes()
         )
         return formated_bill

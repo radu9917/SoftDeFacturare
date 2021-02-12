@@ -270,7 +270,7 @@ class TestService(unittest.TestCase):
         fiscal_bill.set_customer(individual)
         fiscal_bill.set_currency(currency)
         bill_item.set_quantity(2)
-        fiscal_bill.set_tax(3.0)
+        fiscal_bill.set_total(3.0)
         fiscal_bill.set_items([bill_item])
         fiscal_bill.set_id(1)
         fiscal_bill.set_issuer(company)

@@ -1,3 +1,6 @@
+import copy
+
+
 class Bill:
     def __init__(self):
         self.__issuer = None
@@ -7,7 +10,7 @@ class Bill:
         self.__items = []
         self.__currency = None
         self.__notes = None
-        self.__tax = 0.0
+        self.__total = 0.0
         self.__bill_id = None
 
     # GETTERS
@@ -35,18 +38,18 @@ class Bill:
     def get_notes(self):
         return self.__notes
 
-    def get_tax(self):
-        return self.__tax
+    def get_total(self):
+        return self.__total
 
     # SETTERS
     def set_id(self, bill_id):
         self.__bill_id = bill_id
 
     def set_issuer(self, issuer):
-        self.__issuer = issuer
+        self.__issuer = copy.deepcopy(issuer)
 
     def set_customer(self, customer):
-        self.__customer = customer
+        self.__customer = copy.deepcopy(customer)
 
     def set_issue_date(self, issue_date):
         self.__issue_date = issue_date
@@ -55,23 +58,23 @@ class Bill:
         self.__due_date = due_date
 
     def set_items(self, items):
-        self.__items = items
+        self.__items = copy.deepcopy(items)
 
     def set_currency(self, currency):
-        self.__currency = currency
+        self.__currency = copy.deepcopy(currency)
 
     def set_notes(self, notes):
         self.__notes = notes
 
-    def set_tax(self, tax):
-        self.__tax = tax
+    def set_total(self, total):
+        self.__total = total
 
     def __eq__(self, other):
         if self.get_id() != other.get_id():
             return False
         if self.get_currency() != other.get_currency():
             return False
-        if self.get_tax() != other.get_tax():
+        if self.get_total() != other.get_total():
             return False
         if self.get_items() != other.get_items():
             return False
@@ -100,9 +103,9 @@ class Bill:
         tax_exchange_rate = self.__currency.get_exchange_rate()
         item_exchange_rate = item_to_add.get_currency().get_exchange_rate()
         if item_to_add.get_percent_discount():
-            self.__tax += (price - price * discount / 100) * item_exchange_rate / tax_exchange_rate
+            self.__total += (price - price * discount / 100) * item_exchange_rate / tax_exchange_rate
         else:
-            self.__tax += (price - discount) * item_exchange_rate / tax_exchange_rate
+            self.__total += (price - discount) * item_exchange_rate / tax_exchange_rate
 
     def __str__(self):
         customer = self.get_customer()
@@ -110,10 +113,10 @@ class Bill:
                   "Issued by: {company_name} - {issuer_email_address}\n"
                   "Date: {issue_date}\n"
                   "Due Date: {due_date}\n"
-                  "Items:\n{items}"
+                  "Items:\n{items}\n"
                   "Total: {total}{currency_symbol}\nNotes: {notes}\n")
         index = 1
-
+        item_base = "{index}. {item_name} - {item_description} - {quantity} x {price}{currency_symbol}\n"
         items = ""
         for item in self.get_items():
             items += item_base.format(
@@ -135,7 +138,7 @@ class Bill:
             issue_date=self.__issue_date,
             due_date=self.__due_date,
             items=items,
-            total=self.__tax,
+            total=self.__total,
             currency_symbol=self.__currency.get_symbol(),
             notes=self.__notes
         )

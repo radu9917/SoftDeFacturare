@@ -7,6 +7,7 @@ from domain.fiscal_bill import FiscalBill
 from domain.invoice import Invoice
 from validator.validator import Validator
 from validator.exceptions import OptionError
+from domain.address import Address
 
 
 class Console:
@@ -56,6 +57,16 @@ class Console:
         individual.set_last_name(input("Last Name: "))
         individual.set_phone_number(input("Phone Number: "))
         individual.set_email_address(input("Email Address: "))
+        address = input("Give address: ")
+        county = input("Give county: ")
+        postal_code = input("Give postal code: ")
+        country = input("Give country: ")
+        customer_address = Address()
+        customer_address.set_address(address)
+        customer_address.set_county(county)
+        customer_address.set_country(country)
+        customer_address.set_postal_code(postal_code)
+        individual.set_address(address)
         return individual
 
     def create_company(self):
@@ -67,6 +78,16 @@ class Console:
         company.set_company_name(input("Company Name: "))
         company.set_fiscal_no(input("Fiscal Number: "))
         company.set_registration_number(input("Registration Number: "))
+        address = input("Give address: ")
+        county = input("Give county: ")
+        postal_code = input("Give postal code: ")
+        country = input("Give country: ")
+        customer_address = Address()
+        customer_address.set_address(address)
+        customer_address.set_county(county)
+        customer_address.set_country(country)
+        customer_address.set_postal_code(postal_code)
+        company.set_address(customer_address)
         return company
 
     def delete_customer(self):
@@ -341,11 +362,11 @@ class Console:
             bill = self.__service.get_invoice(int(input("Give id: ")))
         number = int(input("How many items do you wish to add?"))
         while number != 0:
-           # try:
+            try:
                 self.__service.add_item_to_bill(self.choose_item(), bill)
                 number -= 1
-           # except Exception as exp:
-            #    print(exp)
+            except Exception as exp:
+                print(exp)
 
     def invoice_to_fiscal(self):
         invoice_id = int(input("What invoice do you want to choose?\nGive id: "))
@@ -365,7 +386,7 @@ class Console:
             file.write(self.__service.export_bill_as_txt(bill, template))
 
     def choose_template(self):
-        return "templates/invoice.html"
+        return "templates/invoice_bill_template.txt"
 
     def run(self):
         while True:

@@ -3,7 +3,7 @@ from domain.customer import Customer
 
 class Individual(Customer):
     def __init__(self):
-        super().__init__(None, None, None, None)
+        super().__init__(None, None, None, None, None)
         self.__cnp = None
 
     def get_cnp(self):

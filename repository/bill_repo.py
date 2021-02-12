@@ -34,16 +34,16 @@ class BillRepo(IRepo):
             if bill.get_id() == bill_id:
                 self._list.remove(bill)
                 return bill
+        return None
 
     def update(self, old_obj, new_obj):
         if not type(new_obj) in self._implemented_objects:
             raise TypeError("Type is not allowed")
-        for bill in self._list:
-            if old_obj == bill.get_id():
-                old_bill = bill
-                old = self._id
-                self._id = old_obj
-                self.delete(bill.get_id())
-                self.store(new_obj)
-                self._id = old
-                return old_bill
+        old_bill = self.get(old_obj)
+        if self.delete(old_obj):
+            current_id = self._id
+            self._id = old_obj
+            self.store(new_obj)
+            self._id = current_id
+            return old_bill
+        return None

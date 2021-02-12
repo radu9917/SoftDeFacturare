@@ -3,7 +3,7 @@ from domain.customer import Customer
 
 class Company(Customer):
     def __init__(self):
-        super().__init__(None, None, None, None)
+        super().__init__(None, None, None, None, None)
         self.__company_name = None
         self.__registration_no = None
         self.__fiscal_code = None

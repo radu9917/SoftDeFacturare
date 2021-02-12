@@ -2,13 +2,17 @@ from domain.entity import Entity
 
 
 class Customer(Entity):
-    def __init__(self, first_name, last_name, email_address, phone_number):
+    def __init__(self, first_name, last_name, email_address, phone_number, address):
         super().__init__()
         self.__first_name = first_name
         self.__last_name = last_name
         self.__email_address = email_address
         self.__phone_number = phone_number
+        self.__address = address
     # GETTERS
+
+    def get_address(self):
+        return self.__address
 
     def get_first_name(self):
         return self.__first_name
@@ -23,6 +27,10 @@ class Customer(Entity):
         return self.__phone_number
 
     # SETTERS
+
+    def set_address(self, address):
+        self.__address = address
+
     def set_first_name(self, first_name):
         self.__first_name = first_name
 
@@ -43,6 +51,8 @@ class Customer(Entity):
         if self.__phone_number != other.get_phone_number():
             return False
         if self.__email_address != other.get_email_address():
+            return False
+        if self.__address != other.get_address():
             return False
         if self.get_id() != other.get_id():
             return False

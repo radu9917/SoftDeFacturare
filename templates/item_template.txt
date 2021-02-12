@@ -1,1 +1,1 @@
-    {index}. {item_name} - {item_description} - {quantity}x{price}{currency_symbol}
+    {index}. {item_name} - {item_description} - {quantity}x{price}{currency_symbol} = {item_total}

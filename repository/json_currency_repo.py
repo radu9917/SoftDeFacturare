@@ -10,16 +10,19 @@ class JsonCurrencyRepo(CurrencyRepo):
         self.__load_from_file()
 
     def store(self, obj):
-        super().store(obj)
+        stored_object = super().store(obj)
         self.__store_to_file()
+        return stored_object
 
     def delete(self, obj_id):
-        super().delete(obj_id)
+        deleted_object = super().delete(obj_id)
         self.__store_to_file()
+        return deleted_object
 
     def update(self, old_object, new_object):
-        super().update(old_object, new_object)
+        updated_object = super().update(old_object, new_object)
         self.__store_to_file()
+        return updated_object
 
     def __store_to_file(self):
         currency_list = []
