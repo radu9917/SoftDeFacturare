@@ -110,11 +110,13 @@ class Bill:
     def __str__(self):
         customer = self.get_customer()
         bill_base = ("\nTo: {first_name}  {last_name} - {customer_email_address}\n"
-                  "Issued by: {company_name} - {issuer_email_address}\n"
-                  "Date: {issue_date}\n"
-                  "Due Date: {due_date}\n"
-                  "Items:\n{items}\n"
-                  "Total: {total}{currency_symbol}\nNotes: {notes}\n")
+                     "{customer_address}\n"
+                     "Issued by: {company_name} - {issuer_email_address}\n"
+                     "{issuer_address}"
+                     "Date: {issue_date}\n"
+                     "Due Date: {due_date}\n"
+                     "Items:\n{items}\n"
+                     "Total: {total}{currency_symbol}\nNotes: {notes}\n")
         index = 1
         item_base = "{index}. {item_name} - {item_description} - {quantity} x {price}{currency_symbol}\n"
         items = ""
@@ -133,8 +135,10 @@ class Bill:
             first_name=customer.get_first_name(),
             last_name=customer.get_last_name(),
             customer_email_address=customer.get_email_address(),
+            customer_address=str(customer.get_address()),
             company_name=self.__issuer.get_company_name(),
             issuer_email_address=self.__issuer.get_email_address(),
+            issuer_address=str(self.__issuer.get_address()),
             issue_date=self.__issue_date,
             due_date=self.__due_date,
             items=items,

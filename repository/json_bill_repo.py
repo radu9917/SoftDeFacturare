@@ -116,7 +116,7 @@ class JsonBillRepo(BillRepo):
                 "exchange_rate": exchange_rate
             }
             notes = bill.get_notes()
-            tax = bill.get_total()
+            total = bill.get_total()
             bill_id = bill.get_id()
             bill_dict = {
                 "id": bill_id,
@@ -127,7 +127,7 @@ class JsonBillRepo(BillRepo):
                 "item_list": item_dict_list,
                 "currency": currency_dict,
                 "notes": notes,
-                "tax": tax
+                "total": total
             }
             bill_list.append(bill_dict)
         file = open(self.__file_name, "r")
@@ -191,7 +191,7 @@ class JsonBillRepo(BillRepo):
                                                        customer["first_name"], customer["email_address"],
                                                        customer["phone_number"])
                 if "company_name" in customer:
-                    builder.create_company_customer(customer["company_name"], customer["last-name"],
+                    builder.create_company_customer(customer["company_name"], customer["last_name"],
                                                     customer["first_name"],
                                                     customer["email_address"], customer["phone_number"],
                                                     customer["fiscal_no"], customer["registration_number"])

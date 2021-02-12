@@ -14,6 +14,7 @@ from domain.fiscal_bill import FiscalBill
 from service.service_currency import CurrencyService
 from repository.currency_repo import CurrencyRepo
 from service.service import Service
+from domain.address import Address
 import unittest
 
 
@@ -182,7 +183,13 @@ class TestService(unittest.TestCase):
         service = Service("json_test.json", "json_test.json", "json_test.json", "json_test.json")
         # Customer Options
         company = Company()
+        address = Address()
+        address.set_address("Strada Academiei nr. 7")
+        address.set_county("Bucuresti")
+        address.set_country("Romania")
+        address.set_postal_code("010011")
         company.set_id(1)
+        company.set_address(address)
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")
         company.set_fiscal_no("0000231523647")
@@ -213,6 +220,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(service.get_individual_customer(1), individual)
         service.delete_customer(individual)
         self.assertEqual(service.view_all_individual_customer(), [])
+        individual.set_address(address)
         # Currency Options
         currency = Currency("$", "Dollar", "USD")
         currency.set_id(1)

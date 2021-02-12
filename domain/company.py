@@ -28,6 +28,17 @@ class Company(Customer):
     def set_fiscal_no(self, fiscal_number):
         self.__fiscal_code = fiscal_number
 
+    def __eq__(self, other):
+        if not super().__eq__(other):
+            return False
+        if self.__fiscal_code != other.get_fiscal_no():
+            return False
+        if self.__company_name != other.get_company_name():
+            return False
+        if self.__registration_no != other.get_registration_number():
+            return False
+        return True
+
     def __str__(self):
         company_base = "{company_name}-{first_name} {last_name}"
         formated_company = company_base.format(

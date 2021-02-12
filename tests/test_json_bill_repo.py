@@ -5,6 +5,7 @@ from domain.bill_item import BillItem
 from domain.currency import Currency
 from domain.invoice import Invoice
 from domain.fiscal_bill import FiscalBill
+from domain.address import Address
 import unittest
 
 
@@ -12,6 +13,12 @@ class TestJsonBill(unittest.TestCase):
     def test_invoice_json_repo(self):
         invoice_repo = JsonBillRepo("json_test.json", Invoice)
         company = Company()
+        address = Address()
+        address.set_address("Strada Academiei nr. 7")
+        address.set_county("Bucuresti")
+        address.set_country("Romania")
+        address.set_postal_code("010011")
+        company.set_address(address)
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")
         company.set_fiscal_no("0000231523647")
@@ -28,6 +35,7 @@ class TestJsonBill(unittest.TestCase):
         individual.set_last_name("Vasile")
         individual.set_phone_number("0745321784")
         individual.set_email_address("petre.vasileboss@yahoo.com")
+        individual.set_address(address)
         item = BillItem()
         currency = Currency("$", "Dollar", "USD")
         item.set_id(1)
@@ -57,6 +65,11 @@ class TestJsonBill(unittest.TestCase):
 
     def test_bill_json(self):
         fiscal_repo = JsonBillRepo("json_test.json", FiscalBill)
+        address = Address()
+        address.set_address("Strada Academiei nr. 7")
+        address.set_county("Bucuresti")
+        address.set_country("Romania")
+        address.set_postal_code("010011")
         company = Company()
         company.set_company_name("La Geani")
         company.set_registration_number("RO0123")
@@ -67,6 +80,7 @@ class TestJsonBill(unittest.TestCase):
         company.set_phone_number("0752314567")
         company.set_fiscal_no("0000012345678")
         company.set_registration_number("RO01923")
+        company.set_address(address)
         item = BillItem()
         currency = Currency("$", "Dollar", "USD")
         item.set_id(1)

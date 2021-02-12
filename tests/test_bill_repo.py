@@ -5,15 +5,23 @@ from domain.customer import Customer
 from domain.bill_item import BillItem
 from domain.currency import Currency
 from domain.company import Company
+from domain.address import Address
 
 class TestBillRepo(unittest.TestCase):
     def test_bill_repo(self):
         invoice_repo = BillRepo(Invoice)
 
         invoice = Invoice()
-        customer = Customer("Ion", "Radu", "ion.radu17@yahoo.com", "0758245170")
+        address = Address()
+        address.set_address("Strada Academiei nr. 7")
+        address.set_county("Bucuresti")
+        address.set_country("Romania")
+        address.set_postal_code("010011")
+        customer = Customer("Ion", "Radu", "ion.radu17@yahoo.com", "0758245170", address)
         company = Company()
-        company.set_company_name("La Rica")
+        company.set_address(address)
+        company.set_first_name("Plesoiu")
+        company.set_last_name("Alexandru")
         company.set_fiscal_no("RO0123")
         company.set_registration_number("123456")
         company.set_company_name("Pleso Academy")

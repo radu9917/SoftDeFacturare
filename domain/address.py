@@ -41,3 +41,14 @@ class Address:
                 postal_code=self.__postal_code
         )
         return formated_address
+
+    def __eq__(self, other):
+        if self.__address != other.get_address():
+            return False
+        if self.__county != other.get_county():
+            return False
+        if self.__country != other.get_country():
+            return False
+        if self.__postal_code != other.get_postal_code():
+            return False
+        return True
