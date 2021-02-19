@@ -104,7 +104,8 @@ class Validator:
 
     # OPTION CHECK
     def option_check(self, option, set_max):
-        if not option.isdecimal():
-            raise OptionError("Invalid option")
+        if type(option) != int:
+            if not option.isdecimal():
+                raise OptionError("Invalid option")
         if int(option) > set_max or int(option) < 1:
             raise OptionError("Option does not exist")

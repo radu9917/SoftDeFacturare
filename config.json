@@ -1,4 +1,4 @@
 {
-  "template_folder": "templates/bill/",
-  "selected_bill_template": "simple_bill"
+    "template_folder": "templates/bill/simple_bill",
+    "selected_bill_template": "text_bill.txt"
 }

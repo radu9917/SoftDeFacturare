@@ -29,7 +29,16 @@ class Config:
         return self.__template_folder
 
     def get_bill_template(self):
-        return self.__bill_template + ".html"
+        return self.__bill_template
 
     def get_bill_item_template(self):
-        return self.__bill_template+"_item.html"
+        return self.__bill_template.replace("bill", "bill_item")
+
+    def set_template(self, template):
+        file_dict ={
+            "template_folder": self.__bill_template,
+            "selected_bill_template": template
+        }
+        string = json.dumps(file_dict, indent=4)
+        with open("config.json", "w") as file:
+            file.write(string)

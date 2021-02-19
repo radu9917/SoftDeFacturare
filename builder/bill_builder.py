@@ -46,7 +46,7 @@ class BillBuilder:
         customer.set_phone_number(phone_number)
         self.__customer = customer
 
-    def _create_company(self, name, last_name, first_name, email_address,
+    def __create_company(self, name, last_name, first_name, email_address,
                         phone_number, fiscal_no, registration_number):
         customer = Company()
         customer.set_company_name(name)
@@ -61,15 +61,15 @@ class BillBuilder:
 
     def create_company_customer(self, name, last_name, first_name, email_address,
                                 phone_number, fiscal_no, registration_number):
-        self.__customer = self._create_company(name, last_name,
-                                               first_name, email_address, phone_number,
-                                               fiscal_no, registration_number)
+        self.__customer = self.__create_company(name, last_name,
+                                                first_name, email_address, phone_number,
+                                                fiscal_no, registration_number)
 
     def create_issuer(self, name, last_name, first_name, email_address, phone_number, fiscal_no,
                       registration_number):
-        self.__issuer = self._create_company(name, last_name,
-                                             first_name, email_address, phone_number,
-                                             fiscal_no, registration_number)
+        self.__issuer = self.__create_company(name, last_name,
+                                              first_name, email_address, phone_number,
+                                              fiscal_no, registration_number)
 
     def __create_currency(self, symbol, name, code, exchange_rate):
         currency = Currency(symbol, name, code)
@@ -152,19 +152,20 @@ class BillBuilder:
         self.__notes = None
         self.__total = None
         self.__bill_id = None
+
     def build(self):
         self.validate_components()
         bill = copy.deepcopy(self.__bill)
-        self.__issuer.set_address(self.__issuer_address)
-        self.__customer.set_address(self.__customer_address)
-        bill.set_issuer(self.__issuer)
-        bill.set_customer(self.__customer)
-        bill.set_id(self.__bill_id)
-        bill.set_notes(self.__notes)
-        bill.set_issue_date(self.__issue_date)
-        bill.set_items(self.__item_list)
-        bill.set_currency(self.__currency)
-        bill.set_due_date(self.__due_date)
-        bill.set_total(self.__total)
+        self.__issuer.set_address(copy.deepcopy(self.__issuer_address))
+        self.__customer.set_address(copy.deepcopy(self.__customer_address))
+        bill.set_issuer(copy.deepcopy(self.__issuer))
+        bill.set_customer(copy.deepcopy(self.__customer))
+        bill.set_id(copy.deepcopy(self.__bill_id))
+        bill.set_notes(copy.deepcopy(self.__notes))
+        bill.set_issue_date(copy.deepcopy(self.__issue_date))
+        bill.set_items(copy.deepcopy(self.__item_list))
+        bill.set_currency(copy.deepcopy(self.__currency))
+        bill.set_due_date(copy.deepcopy(self.__due_date))
+        bill.set_total(copy.deepcopy(self.__total))
         self.reset_components()
         return bill

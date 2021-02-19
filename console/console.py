@@ -265,10 +265,10 @@ class Console:
     def bill_menu(self):
         print("1.Create bill\n2.Delete bill\n3.Modify bill")
         print("4.Print bill\n5.Add item to bill\n6.Create a invoice as a fiscal bill\n"
-              "7.Render Bill")
+              "7.Render bill\n8.Choose template")
         option = input("Choose option:")
         try:
-            self.__validator.option_check(option, 7)
+            self.__validator.option_check(option, 8)
             options = {
                 "1": self.create_bill,
                 "2": self.delete_bill,
@@ -276,7 +276,8 @@ class Console:
                 "4": self.print_bill,
                 "5": self.add_items_to_bill,
                 "6": self.invoice_to_fiscal,
-                "7": self.render_bill
+                "7": self.render_bill,
+                "8": self.choose_file()
             }
             options[option]()
         except OptionError as exp:
@@ -392,13 +393,25 @@ class Console:
         config = Config.get_instance()
         for file in os.listdir(config.get_template_folder()):
             if os.path.isfile(config.get_template_folder() + file):
-                files.append(file)
-        print(files)
+                if file.find("_item") == -1:
+                    files.append(file)
+        index = 1
+        if files:
+            print("Choose template from:")
+            for file in files:
+
+                print(str(index) + "-" + file + "\n")
+                index += 1
+            choice = int(input())
+            try:
+                self.__validator.option_check(choice, len(files))
+                config.set_template(files[choice - 1])
+            except Exception as exp:
+                print(xp)
 
     def choose_template(self):
         template = Config.get_instance().get_bill_template()
         return template
-       # return "templates/simple_bill.html"
 
     def run(self):
         while True:
